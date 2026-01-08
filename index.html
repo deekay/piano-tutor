@@ -139,6 +139,9 @@
                 <button id="bebopMode" onclick="switchMode('bebop')" title="Bebop scales: 8-note scales with chromatic passing tones for smooth jazz lines" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
                     15. Bebop
                 </button>
+                <button id="tritoneMode" onclick="switchMode('tritone')" title="Tritone substitution: replace V7 with bII7 (a tritone away)" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
+                    16. Tritone Sub
+                </button>
             </div>
         </div>
 
@@ -179,6 +182,10 @@
                     <div>
                         <div class="text-xs text-slate-500 uppercase tracking-wide mb-1">Scales</div>
                         <p><strong>13-15:</strong> Jazz scales, pentatonic & blues, bebop scales</p>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 uppercase tracking-wide mb-1">Reharmonization</div>
+                        <p><strong>16:</strong> Tritone substitution - replace V7 with bII7</p>
                     </div>
                 </div>
                 <p class="text-xs text-slate-500 mt-4">Hover over any mode button for a description.</p>
@@ -2512,6 +2519,150 @@
             </div>
         </div>
 
+        <!-- ==================== TRITONE SUBSTITUTION MODE ==================== -->
+        <div id="tritonePanel" class="mode-panel hidden">
+            <div class="bg-slate-800 rounded-lg p-6 mb-6 shadow-lg relative overflow-hidden">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h2 class="text-xl font-semibold text-white">Tritone Substitution</h2>
+                            <button onclick="document.getElementById('tritoneInfoModal').classList.remove('hidden')" class="text-slate-400 hover:text-white transition" title="About tritone substitution">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </button>
+                        </div>
+                        <p class="text-sm text-slate-400">Replace <span class="text-blue-400">V7</span> with <span class="text-blue-400">bII7</span> (a tritone away)</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-slate-400">Avg Time</p>
+                        <p id="tritone_responseTime" class="text-2xl font-mono timer-fast">--</p>
+                    </div>
+                </div>
+
+                <!-- Settings -->
+                <div id="tritone_settingsPanel" class="mb-6 p-4 bg-slate-900 rounded-lg">
+                    <div class="flex flex-wrap gap-4 items-end">
+                        <div>
+                            <label class="text-sm text-slate-400 block mb-2">Voicing:</label>
+                            <select id="tritone_voicingSelect" class="bg-slate-700 border border-slate-600 rounded px-3 py-2 text-white text-sm">
+                                <option value="any">Any voicing (4 notes)</option>
+                                <option value="shell">Shell voicing (R-3-7)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-sm text-slate-400 block mb-2">Rounds:</label>
+                            <select id="tritone_roundsSelect" class="bg-slate-700 border border-slate-600 rounded px-3 py-2 text-white text-sm">
+                                <option value="6">6</option>
+                                <option value="12" selected>12</option>
+                                <option value="24">24</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-2 ml-4">
+                            <input type="checkbox" id="tritone_showHints" class="w-4 h-4 rounded bg-slate-700 border-slate-600">
+                            <label for="tritone_showHints" class="text-sm text-slate-400">Show hints</label>
+                        </div>
+                    </div>
+                    <p id="tritone_settingsHint" class="text-xs text-slate-500 mt-3">Given a dom7 chord, play its tritone substitution (root + 6 semitones = new root)</p>
+                </div>
+
+                <!-- Challenge Display -->
+                <div id="tritone_challengeDisplay" class="mb-6 p-8 bg-slate-900 rounded-lg text-center hidden">
+                    <p class="text-slate-400 mb-2">Play the tritone sub for</p>
+                    <p class="text-5xl font-bold text-white mb-4" id="tritone_chordDisplay">G7</p>
+                    <p id="tritone_hint" class="text-lg text-blue-400 hidden"></p>
+                    <p id="tritone_feedbackText" class="text-lg font-semibold h-7 mt-4"></p>
+                </div>
+
+                <!-- Game Complete Display -->
+                <div id="tritone_completeDisplay" class="mb-6 p-8 bg-slate-900 rounded-lg text-center hidden">
+                    <h3 class="text-3xl font-bold text-green-400 mb-4">Practice Complete!</h3>
+                    <div class="grid grid-cols-5 gap-4 mb-4 text-center">
+                        <div>
+                            <p class="text-slate-400 text-sm">Rounds</p>
+                            <p id="tritone_finalRounds" class="text-2xl font-bold text-white">12</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Avg Time</p>
+                            <p id="tritone_finalAvgTime" class="text-2xl font-bold text-white">--</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">1st Try</p>
+                            <p id="tritone_finalFirstTry" class="text-2xl font-bold text-white">0%</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Mistakes</p>
+                            <p id="tritone_finalMistakes" class="text-2xl font-bold text-white">0</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Slow</p>
+                            <p id="tritone_finalSlow" class="text-2xl font-bold text-white">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Piano Container -->
+                <div class="flex justify-center mb-6">
+                    <svg id="tritone_pianoSvg" viewBox="0 0 700 150" class="max-w-full h-auto"></svg>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex flex-wrap gap-4 justify-center items-center">
+                    <button id="tritone_startBtn" onclick="tritoneStartGame()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition">
+                        Start Practice
+                    </button>
+                    <div class="text-slate-400">
+                        Round: <span id="tritone_roundDisplay">0</span> / <span id="tritone_totalRounds">12</span>
+                    </div>
+                    <div class="flex gap-2 text-sm">
+                        <span class="text-green-400">1st Try: <span id="tritone_firstTry">0%</span></span>
+                        <span>Mistakes: <span id="tritone_mistakes">0</span></span>
+                        <span>Slow: <span id="tritone_slow">0</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div id="tritone_historyContent" class="bg-slate-800 rounded-lg p-6 shadow-lg mb-6"></div>
+
+            <!-- Breakdown Section -->
+            <div id="tritone_breakdownSection" class="bg-slate-800 rounded-lg p-6 shadow-lg hidden">
+                <h2 class="text-xl font-semibold mb-4 text-white">Chord Breakdown</h2>
+                <div id="tritone_breakdownGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"></div>
+            </div>
+        </div>
+
+        <!-- Tritone Substitution Info Modal -->
+        <div id="tritoneInfoModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50" onclick="if(event.target === this) this.classList.add('hidden')">
+            <div class="bg-slate-800 rounded-lg p-6 max-w-lg mx-4 max-h-[80vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-white">Tritone Substitution</h3>
+                    <button onclick="document.getElementById('tritoneInfoModal').classList.add('hidden')" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <div class="text-sm text-slate-300 space-y-4">
+                    <div>
+                        <div class="text-blue-400 font-semibold mb-1">What is it?</div>
+                        <p>Replace any dominant 7th chord with another dom7 chord whose root is a <strong>tritone (6 half steps)</strong> away. G7 → Db7, C7 → Gb7, etc.</p>
+                    </div>
+                    <div>
+                        <div class="text-blue-400 font-semibold mb-1">Why does it work?</div>
+                        <p>Both chords share the same <strong>tritone interval</strong> (the 3rd and 7th). In G7, the tritone is B-F. In Db7, it's F-Cb(B). Same notes, different context!</p>
+                    </div>
+                    <div>
+                        <div class="text-blue-400 font-semibold mb-1">How to use it</div>
+                        <p>In a ii-V-I: instead of Dm7 → G7 → Cmaj7, play Dm7 → <strong>Db7</strong> → Cmaj7. The bass moves chromatically (D → Db → C) for smooth voice leading.</p>
+                    </div>
+                    <div>
+                        <div class="text-blue-400 font-semibold mb-1">Quick mental math</div>
+                        <p>Add 6 semitones to the root: G + 6 = Db. Or think "up a tritone" or "down a tritone" (same note).</p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-700">
+                        <p class="text-xs text-slate-500">Tip: The tritone sub creates chromatic bass motion, making it a favorite tool for jazz reharmonization.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer -->
         <footer class="text-center text-slate-500 text-sm mt-8 pt-4 border-t border-slate-700">
             Feedback? DM <a href="https://twitter.com/dksf" target="_blank" class="text-blue-400 hover:text-blue-300">@dksf</a> on Twitter/X
@@ -2543,8 +2694,8 @@
         function switchMode(mode) {
             currentMode = mode;
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            const modeButtons = { intervals: 'intervalsMode', chords: 'chordsMode', iivi: 'iiviMode', scales: 'scalesMode', ext: 'extMode', alt: 'altMode', adv: 'advMode', minorIivi: 'minorIiviMode', kb: 'kbMode', jtou: 'jtouMode', dom7v: 'dom7vMode', extv: 'extvMode', r251: 'r251Mode', pent: 'pentMode', bebop: 'bebopMode' };
-            const modePanels = { intervals: 'intervalsPanel', chords: 'chordsPanel', iivi: 'iiviPanel', scales: 'scalesPanel', ext: 'extPanel', alt: 'altPanel', adv: 'advPanel', minorIivi: 'minorIiviPanel', kb: 'kbPanel', jtou: 'jtouPanel', dom7v: 'dom7vPanel', extv: 'extvPanel', r251: 'r251Panel', pent: 'pentPanel', bebop: 'bebopPanel' };
+            const modeButtons = { intervals: 'intervalsMode', chords: 'chordsMode', iivi: 'iiviMode', scales: 'scalesMode', ext: 'extMode', alt: 'altMode', adv: 'advMode', minorIivi: 'minorIiviMode', kb: 'kbMode', jtou: 'jtouMode', dom7v: 'dom7vMode', extv: 'extvMode', r251: 'r251Mode', pent: 'pentMode', bebop: 'bebopMode', tritone: 'tritoneMode' };
+            const modePanels = { intervals: 'intervalsPanel', chords: 'chordsPanel', iivi: 'iiviPanel', scales: 'scalesPanel', ext: 'extPanel', alt: 'altPanel', adv: 'advPanel', minorIivi: 'minorIiviPanel', kb: 'kbPanel', jtou: 'jtouPanel', dom7v: 'dom7vPanel', extv: 'extvPanel', r251: 'r251Panel', pent: 'pentPanel', bebop: 'bebopPanel', tritone: 'tritonePanel' };
             document.getElementById(modeButtons[mode]).classList.add('active');
             document.querySelectorAll('.mode-panel').forEach(panel => panel.classList.add('hidden'));
             document.getElementById(modePanels[mode]).classList.remove('hidden');
@@ -2706,6 +2857,7 @@
                 else if (currentMode === 'r251') r251OnNoteOn(note);
                 else if (currentMode === 'pent') pentOnNoteOn(note);
                 else if (currentMode === 'bebop') bebopOnNoteOn(note);
+                else if (currentMode === 'tritone') tritoneOnNoteOn(note);
             } else if ((cmd & 0xF0) === 128 || ((cmd & 0xF0) === 144 && vel === 0)) {
                 heldNotes.delete(note);
                 // Clear preview piano highlight
@@ -2725,6 +2877,7 @@
                 else if (currentMode === 'r251') r251OnNoteOff(note);
                 else if (currentMode === 'pent') pentOnNoteOff(note);
                 else if (currentMode === 'bebop') bebopOnNoteOff(note);
+                else if (currentMode === 'tritone') tritoneOnNoteOff(note);
             }
         }
 
@@ -9648,6 +9801,330 @@
             content.innerHTML = html;
         }
 
+        // ============ TRITONE SUBSTITUTION MODE ============
+        let tritone_isPlaying = false;
+        let tritone_challenge = null;
+        let tritone_challengeStartTime = null;
+        let tritone_config = null;
+        let tritone_currentRound = 0;
+        let tritone_firstTryCorrect = 0;
+        let tritone_totalMistakes = 0;
+        let tritone_roundHadMistake = false;
+        let tritone_stats = {};
+        let tritone_allTimes = [];
+        let tritone_slowCount = 0;
+        let tritone_history = [];
+        let tritone_cumulativeStats = {};
+
+        function tritoneGetSubstitution(originalRoot) {
+            // Tritone = 6 semitones
+            const subRoot = (originalRoot + 6) % 12;
+            // Dom7 intervals: R, M3, P5, m7 = 0, 4, 7, 10
+            const fullVoicing = [0, 4, 7, 10].map(i => (subRoot + i) % 12);
+            // Shell voicing: R, 3, 7 = 0, 4, 10
+            const shellVoicing = [0, 4, 10].map(i => (subRoot + i) % 12);
+
+            return {
+                originalRoot,
+                originalName: NOTE_NAMES[originalRoot] + '7',
+                subRoot,
+                subName: NOTE_NAMES[subRoot] + '7',
+                fullPitchClasses: new Set(fullVoicing),
+                shellPitchClasses: new Set(shellVoicing)
+            };
+        }
+
+        function tritoneStartGame() {
+            const voicing = document.getElementById('tritone_voicingSelect').value;
+            const rounds = parseInt(document.getElementById('tritone_roundsSelect').value);
+            const showHints = document.getElementById('tritone_showHints').checked;
+
+            tritone_config = { voicing, rounds, showHints };
+            tritone_currentRound = 0;
+            tritone_firstTryCorrect = 0;
+            tritone_totalMistakes = 0;
+            tritone_stats = {};
+            tritone_allTimes = [];
+            tritone_slowCount = 0;
+            tritone_isPlaying = true;
+
+            document.getElementById('tritone_settingsPanel').classList.add('hidden');
+            document.getElementById('tritone_challengeDisplay').classList.remove('hidden');
+            document.getElementById('tritone_completeDisplay').classList.add('hidden');
+            document.getElementById('tritone_startBtn').textContent = 'Stop Practice';
+            document.getElementById('tritone_startBtn').onclick = tritoneStopGame;
+            document.getElementById('tritone_totalRounds').textContent = rounds;
+            document.getElementById('tritone_firstTry').textContent = '0%';
+            document.getElementById('tritone_mistakes').textContent = '0';
+            document.getElementById('tritone_slow').textContent = '0';
+            document.getElementById('tritone_responseTime').textContent = '--';
+
+            tritoneNextChallenge();
+        }
+
+        function tritoneStopGame() {
+            tritone_isPlaying = false;
+            document.getElementById('tritone_settingsPanel').classList.remove('hidden');
+            document.getElementById('tritone_challengeDisplay').classList.add('hidden');
+            document.getElementById('tritone_startBtn').textContent = 'Start Practice';
+            document.getElementById('tritone_startBtn').onclick = tritoneStartGame;
+            clearPiano('tritone_pianoSvg');
+        }
+
+        function tritoneNextChallenge() {
+            if (tritone_currentRound >= tritone_config.rounds) {
+                tritoneEndGame();
+                return;
+            }
+
+            tritone_currentRound++;
+            tritone_roundHadMistake = false;
+
+            // Pick random root for the original chord
+            const originalRoot = Math.floor(Math.random() * 12);
+            tritone_challenge = tritoneGetSubstitution(originalRoot);
+
+            // Update display
+            document.getElementById('tritone_chordDisplay').textContent = tritone_challenge.originalName;
+            document.getElementById('tritone_roundDisplay').textContent = tritone_currentRound;
+            document.getElementById('tritone_feedbackText').textContent = '';
+            document.getElementById('tritone_feedbackText').className = 'text-lg font-semibold h-7 mt-4';
+
+            // Hint
+            const hintEl = document.getElementById('tritone_hint');
+            if (tritone_config.showHints) {
+                const noteNames = Array.from(tritone_config.voicing === 'shell'
+                    ? tritone_challenge.shellPitchClasses
+                    : tritone_challenge.fullPitchClasses
+                ).map(pc => NOTE_NAMES[pc]);
+                hintEl.textContent = `→ ${tritone_challenge.subName} (${noteNames.join(' ')})`;
+                hintEl.classList.remove('hidden');
+            } else {
+                hintEl.classList.add('hidden');
+            }
+
+            clearPiano('tritone_pianoSvg');
+            tritone_challengeStartTime = Date.now();
+        }
+
+        function tritoneOnNoteOn(midi) {
+            if (!tritone_isPlaying || !tritone_challenge) return;
+
+            const pitchClass = midi % 12;
+            const expectedPitchClasses = tritone_config.voicing === 'shell'
+                ? tritone_challenge.shellPitchClasses
+                : tritone_challenge.fullPitchClasses;
+
+            if (expectedPitchClasses.has(pitchClass)) {
+                highlightKey('tritone_pianoSvg', midi, 'correct');
+            } else {
+                highlightKey('tritone_pianoSvg', midi, 'incorrect');
+                if (!tritone_roundHadMistake) {
+                    tritone_roundHadMistake = true;
+                    tritone_totalMistakes++;
+                    document.getElementById('tritone_mistakes').textContent = tritone_totalMistakes;
+                }
+                document.getElementById('tritone_feedbackText').textContent = 'Wrong note';
+                document.getElementById('tritone_feedbackText').className = 'text-lg font-semibold h-7 mt-4 text-red-400';
+                return;
+            }
+
+            // Check if all notes are held
+            const heldPitchClasses = new Set(Array.from(heldNotes).map(n => n % 12));
+            const allNotesHeld = Array.from(expectedPitchClasses).every(pc => heldPitchClasses.has(pc));
+
+            if (allNotesHeld) {
+                const elapsed = Date.now() - tritone_challengeStartTime;
+                const isSlow = elapsed > 2000;
+
+                if (!tritone_roundHadMistake) {
+                    tritone_firstTryCorrect++;
+                }
+                if (isSlow) {
+                    tritone_slowCount++;
+                }
+
+                tritone_allTimes.push(elapsed);
+
+                // Track stats
+                const key = tritone_challenge.originalName;
+                if (!tritone_stats[key]) {
+                    tritone_stats[key] = { attempts: 0, mistakes: 0, times: [], originalRoot: tritone_challenge.originalRoot };
+                }
+                tritone_stats[key].attempts++;
+                if (tritone_roundHadMistake) tritone_stats[key].mistakes++;
+                tritone_stats[key].times.push(elapsed);
+
+                // Update display
+                const firstTryPct = Math.round((tritone_firstTryCorrect / tritone_currentRound) * 100);
+                document.getElementById('tritone_firstTry').textContent = firstTryPct + '%';
+                document.getElementById('tritone_slow').textContent = tritone_slowCount;
+
+                const avgTime = tritone_allTimes.reduce((a, b) => a + b, 0) / tritone_allTimes.length;
+                const avgSec = (avgTime / 1000).toFixed(1);
+                document.getElementById('tritone_responseTime').textContent = avgSec + 's';
+                document.getElementById('tritone_responseTime').className = `text-2xl font-mono ${avgTime < 2000 ? 'timer-fast' : 'timer-slow'}`;
+
+                document.getElementById('tritone_feedbackText').textContent = `${tritone_challenge.subName}! ${isSlow ? '(Slow)' : ''}`;
+                document.getElementById('tritone_feedbackText').className = `text-lg font-semibold h-7 mt-4 ${isSlow ? 'text-yellow-400' : 'text-green-400'}`;
+
+                setTimeout(tritoneNextChallenge, 800);
+            }
+        }
+
+        function tritoneOnNoteOff(midi) {
+            clearKeyHighlight('tritone_pianoSvg', midi);
+        }
+
+        function tritoneEndGame() {
+            tritone_isPlaying = false;
+
+            document.getElementById('tritone_challengeDisplay').classList.add('hidden');
+            document.getElementById('tritone_completeDisplay').classList.remove('hidden');
+            document.getElementById('tritone_startBtn').textContent = 'Start Practice';
+            document.getElementById('tritone_startBtn').onclick = tritoneStartGame;
+            document.getElementById('tritone_settingsPanel').classList.remove('hidden');
+
+            // Final stats
+            const avgTime = tritone_allTimes.length > 0 ? tritone_allTimes.reduce((a, b) => a + b, 0) / tritone_allTimes.length : 0;
+            const avgSec = (avgTime / 1000).toFixed(1);
+            const firstTryPct = Math.round((tritone_firstTryCorrect / tritone_config.rounds) * 100);
+
+            document.getElementById('tritone_finalRounds').textContent = tritone_config.rounds;
+            document.getElementById('tritone_finalAvgTime').textContent = avgSec + 's';
+            document.getElementById('tritone_finalFirstTry').textContent = firstTryPct + '%';
+            document.getElementById('tritone_finalMistakes').textContent = tritone_totalMistakes;
+            document.getElementById('tritone_finalSlow').textContent = tritone_slowCount;
+
+            // Save to history
+            const gameRecord = {
+                date: new Date().toISOString(),
+                rounds: tritone_config.rounds,
+                avgTime,
+                firstTryPct,
+                mistakes: tritone_totalMistakes,
+                slow: tritone_slowCount,
+                voicing: tritone_config.voicing,
+                stats: tritone_stats
+            };
+            tritone_history.unshift(gameRecord);
+            if (tritone_history.length > 20) tritone_history.pop();
+            localStorage.setItem('tritone_history', JSON.stringify(tritone_history));
+
+            tritoneUpdateCumulativeStats();
+            tritoneShowBreakdown();
+            tritoneRenderHistory();
+            clearPiano('tritone_pianoSvg');
+        }
+
+        function tritoneShowBreakdown() {
+            const grid = document.getElementById('tritone_breakdownGrid');
+            grid.innerHTML = '';
+
+            const sortedKeys = Object.keys(tritone_stats).sort((a, b) => {
+                const aRate = tritone_stats[a].mistakes / tritone_stats[a].attempts;
+                const bRate = tritone_stats[b].mistakes / tritone_stats[b].attempts;
+                return bRate - aRate;
+            });
+
+            sortedKeys.forEach(key => {
+                const stat = tritone_stats[key];
+                const sub = tritoneGetSubstitution(stat.originalRoot);
+                const avgTime = stat.times.reduce((a, b) => a + b, 0) / stat.times.length;
+                const accuracy = Math.round(((stat.attempts - stat.mistakes) / stat.attempts) * 100);
+                const isSlow = avgTime > 2000;
+
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-lg ${stat.mistakes > 0 ? 'bg-red-900/30 border border-red-700/50' : 'bg-slate-700'}`;
+                card.innerHTML = `
+                    <div class="font-semibold text-white">${key} → ${sub.subName}</div>
+                    <div class="text-sm ${stat.mistakes > 0 ? 'text-red-400' : 'text-green-400'}">${accuracy}% accuracy</div>
+                    <div class="text-xs ${isSlow ? 'text-yellow-400' : 'text-slate-400'}">${(avgTime / 1000).toFixed(1)}s avg</div>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.getElementById('tritone_breakdownSection').classList.remove('hidden');
+        }
+
+        function tritoneLoadHistory() {
+            const saved = localStorage.getItem('tritone_history');
+            if (saved) {
+                tritone_history = JSON.parse(saved);
+            }
+            const cumSaved = localStorage.getItem('tritone_cumulativeStats');
+            if (cumSaved) {
+                tritone_cumulativeStats = JSON.parse(cumSaved);
+            }
+            tritoneRenderHistory();
+        }
+
+        function tritoneUpdateCumulativeStats() {
+            Object.keys(tritone_stats).forEach(key => {
+                const stat = tritone_stats[key];
+                if (!tritone_cumulativeStats[key]) {
+                    tritone_cumulativeStats[key] = { attempts: 0, mistakes: 0 };
+                }
+                tritone_cumulativeStats[key].attempts += stat.attempts;
+                tritone_cumulativeStats[key].mistakes += stat.mistakes;
+            });
+            localStorage.setItem('tritone_cumulativeStats', JSON.stringify(tritone_cumulativeStats));
+        }
+
+        function tritoneGetProblemAreas() {
+            const dominated = [];
+            Object.keys(tritone_cumulativeStats).forEach(key => {
+                const stat = tritone_cumulativeStats[key];
+                if (stat.attempts >= 3) {
+                    const mistakeRate = stat.mistakes / stat.attempts;
+                    if (mistakeRate > 0.3) {
+                        dominated.push({ key, mistakeRate, attempts: stat.attempts });
+                    }
+                }
+            });
+            return dominated.sort((a, b) => b.mistakeRate - a.mistakeRate).slice(0, 5);
+        }
+
+        function tritoneRenderHistory() {
+            const content = document.getElementById('tritone_historyContent');
+            if (tritone_history.length === 0) {
+                content.innerHTML = '<h2 class="text-xl font-semibold mb-4 text-white">History</h2><p class="text-slate-400">No games played yet.</p>';
+                return;
+            }
+
+            let html = '<h2 class="text-xl font-semibold mb-4 text-white">History</h2>';
+            html += '<div class="space-y-2">';
+
+            tritone_history.slice(0, 5).forEach(game => {
+                const date = new Date(game.date).toLocaleDateString();
+                const avgSec = (game.avgTime / 1000).toFixed(1);
+                html += `<div class="flex justify-between items-center p-2 bg-slate-700 rounded">
+                    <span class="text-slate-400">${date}</span>
+                    <span class="text-white">${game.rounds} rounds</span>
+                    <span class="${game.avgTime < 2000 ? 'text-green-400' : 'text-yellow-400'}">${avgSec}s</span>
+                    <span class="text-green-400">${game.firstTryPct}%</span>
+                </div>`;
+            });
+
+            html += '</div>';
+
+            // Problem areas
+            const problemAreas = tritoneGetProblemAreas();
+            if (problemAreas.length > 0) {
+                html += `<div class="border-t border-slate-700 pt-3 mt-3">
+                    <p class="text-xs text-slate-400 mb-2">Problem Areas</p>
+                    <div class="flex flex-wrap gap-2">`;
+                problemAreas.forEach(area => {
+                    html += `<span class="px-2 py-1 bg-red-900/30 border border-red-700/50 rounded text-xs">
+                        ${area.key} <span class="text-red-400">${(area.mistakeRate * 100).toFixed(0)}%</span>
+                    </span>`;
+                });
+                html += '</div></div>';
+            }
+
+            content.innerHTML = html;
+        }
+
         // ============ SETTINGS PERSISTENCE ============
         function saveAllSettings() {
             const settings = {
@@ -9724,6 +10201,11 @@
                     scaleType: document.getElementById('bebop_scaleTypeSelect').value,
                     rounds: document.getElementById('bebop_roundsSelect').value,
                     showHints: document.getElementById('bebop_showHints').checked
+                },
+                tritone: {
+                    voicing: document.getElementById('tritone_voicingSelect').value,
+                    rounds: document.getElementById('tritone_roundsSelect').value,
+                    showHints: document.getElementById('tritone_showHints').checked
                 }
             };
             localStorage.setItem('pianoTutorSettings', JSON.stringify(settings));
@@ -9844,6 +10326,13 @@
                     if (settings.bebop.rounds) document.getElementById('bebop_roundsSelect').value = settings.bebop.rounds;
                     if (settings.bebop.showHints !== undefined) document.getElementById('bebop_showHints').checked = settings.bebop.showHints;
                 }
+
+                // Tritone Substitution
+                if (settings.tritone) {
+                    if (settings.tritone.voicing) document.getElementById('tritone_voicingSelect').value = settings.tritone.voicing;
+                    if (settings.tritone.rounds) document.getElementById('tritone_roundsSelect').value = settings.tritone.rounds;
+                    if (settings.tritone.showHints !== undefined) document.getElementById('tritone_showHints').checked = settings.tritone.showHints;
+                }
             } catch (e) {
                 console.error('Failed to load settings:', e);
             }
@@ -9866,6 +10355,7 @@
         drawPiano('r251_pianoSvg');
         drawPiano('pent_pianoSvg');
         drawPiano('bebop_pianoSvg');
+        drawPiano('tritone_pianoSvg');
         initMIDI();
         intLoadHistory();
         chLoadHistory();
@@ -9890,6 +10380,7 @@
         r251LoadHistory();
         pentLoadHistory();
         bebopLoadHistory();
+        tritoneLoadHistory();
         loadAllSettings();
         document.getElementById('jtou_voicingSelect').addEventListener('change', function() {
             const hint = document.getElementById('jtou_settingsHint');
@@ -9899,7 +10390,7 @@
                 hint.innerText = 'The classic Grover Washington Jr. / Bill Withers progression. In Fm: Dbmaj9 → C7#9 → Fm9';
             }
         });
-        window.addEventListener('resize', () => { drawPiano('previewPianoSvg'); drawPiano('pianoSvg'); drawPiano('ch_pianoSvg'); drawPiano('iivi_pianoSvg'); drawPiano('sc_pianoSvg'); drawPiano('ext_pianoSvg'); drawPiano('alt_pianoSvg'); drawPiano('adv_pianoSvg'); drawPiano('miivi_pianoSvg'); drawPiano('kb_pianoSvg'); drawPiano('jtou_pianoSvg'); drawPiano('dom7v_pianoSvg'); drawPiano('extv_pianoSvg'); drawPiano('r251_pianoSvg'); drawPiano('pent_pianoSvg'); drawPiano('bebop_pianoSvg'); });
+        window.addEventListener('resize', () => { drawPiano('previewPianoSvg'); drawPiano('pianoSvg'); drawPiano('ch_pianoSvg'); drawPiano('iivi_pianoSvg'); drawPiano('sc_pianoSvg'); drawPiano('ext_pianoSvg'); drawPiano('alt_pianoSvg'); drawPiano('adv_pianoSvg'); drawPiano('miivi_pianoSvg'); drawPiano('kb_pianoSvg'); drawPiano('jtou_pianoSvg'); drawPiano('dom7v_pianoSvg'); drawPiano('extv_pianoSvg'); drawPiano('r251_pianoSvg'); drawPiano('pent_pianoSvg'); drawPiano('bebop_pianoSvg'); drawPiano('tritone_pianoSvg'); });
     </script>
 </body>
 </html>
