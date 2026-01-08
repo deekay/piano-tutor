@@ -1115,6 +1115,8 @@
                             <label class="inline-flex items-center"><input type="checkbox" class="adv-type-cb mr-2" value="dom7sharp5" checked><span>7#5</span></label>
                             <label class="inline-flex items-center"><input type="checkbox" class="adv-type-cb mr-2" value="dom13"><span>Dom 13</span></label>
                             <label class="inline-flex items-center"><input type="checkbox" class="adv-type-cb mr-2" value="dom7alt"><span>7alt</span></label>
+                            <label class="inline-flex items-center"><input type="checkbox" class="adv-type-cb mr-2" value="sus4"><span>Sus4</span></label>
+                            <label class="inline-flex items-center"><input type="checkbox" class="adv-type-cb mr-2" value="7sus4"><span>7sus4</span></label>
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-4 items-end">
@@ -5143,7 +5145,9 @@
             'min6': { name: 'min6', display: 'm6', intervals: [0, 3, 7, 9], formula: 'R b3 5 6', noteCount: 4 },
             'dom7sharp5': { name: 'dom7sharp5', display: '7#5', intervals: [0, 4, 8, 10], formula: 'R 3 #5 b7', noteCount: 4 },
             'dom13': { name: 'dom13', display: '13', intervals: [0, 4, 7, 10, 14, 21], formula: 'R 3 5 b7 9 13', noteCount: 5 }, // min 5 notes
-            'dom7alt': { name: 'dom7alt', display: '7alt', intervals: [0, 4, 10, 3, 8], formula: 'R 3 b7 #9 b13', noteCount: 5 } // no 5th
+            'dom7alt': { name: 'dom7alt', display: '7alt', intervals: [0, 4, 10, 3, 8], formula: 'R 3 b7 #9 b13', noteCount: 5 }, // no 5th
+            'sus4': { name: 'sus4', display: 'sus4', intervals: [0, 5, 7], formula: 'R 4 5', noteCount: 3 },
+            '7sus4': { name: '7sus4', display: '7sus4', intervals: [0, 5, 7, 10], formula: 'R 4 5 b7', noteCount: 4 }
         };
 
         let adv_isPlaying = false;
