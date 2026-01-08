@@ -7,22 +7,38 @@ A web-based interactive training app for learning jazz piano fundamentals. Pract
 ## Features
 
 - **MIDI keyboard support** - Connect any MIDI keyboard for real-time practice
-- **10 practice modes** - Progressive curriculum from basics to advanced voicings
+- **13 practice modes** - Progressive curriculum from basics to advanced voicings
 - **Performance tracking** - Stats, response times, and problem area identification
 - **No installation required** - Runs entirely in the browser
 
 ## Practice Modes
 
+### Foundations
 1. **Intervals** - Identify and play intervals (half steps through octaves)
 2. **7th Chords** - maj7, min7, and dom7 chord recognition
+
+### Progressions
 3. **ii-V-I** - The essential jazz progression in all 12 keys
-4. **Extensions** - Add 9ths, 11ths, and 13ths to your voicings
-5. **Altered** - Practice altered tensions (b9, #9, #11, b13)
-6. **Jazz Scales** - Scales that work over each chord type
-7. **Advanced Chords** - Half-diminished, diminished, minor-major 7th
-8. **Minor ii-V-i** - The minor key progression
-9. **Kenny Barron Voicing** - Stacked 5ths two-hand voicing technique
-10. **JTOU** - The "Just the Two of Us" progression
+4. **Minor ii-V-i** - The minor key progression (iiø7 - V7 - imM7)
+
+### Voicings
+5. **Rootless** - Type A/B voicings (3-5-7-9 and 7-9-3-5) for all chord types
+6. **Extended** - Maj6/9, Min6/9, and Dom13 voicings
+7. **Rootless ii-V-I** - Voice-led progressions with Type A → Type B → Type A
+
+### Color Tones
+8. **Extensions** - Add 9ths, 11ths, and 13ths to your voicings
+9. **Altered** - Practice altered tensions (b9, #9, #11, b13)
+
+### Advanced
+10. **Advanced Chords** - Half-diminished, diminished, minor-major 7th
+11. **Kenny Barron Voicing** - Stacked 5ths two-hand voicing technique
+
+### Repertoire
+12. **JTOU** - The "Just the Two of Us" progression
+
+### Scales
+13. **Jazz Scales** - Scales that work over each chord type
 
 ## Getting Started
 

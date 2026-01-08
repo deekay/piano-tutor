@@ -86,10 +86,14 @@
         </div>
 
         <!-- Practice Mode Selection -->
-        <div id="practiceSection" class="bg-slate-800 rounded-lg p-6 mb-6 shadow-lg hidden">
-            <h2 class="text-xl font-semibold mb-4 text-white">Practice Mode</h2>
-            <p class="text-xs text-slate-500 mb-3">Hover over modes for descriptions. Start with Intervals, then progress through 7th Chords and ii-V-I.</p>
-            <div class="flex flex-wrap gap-2">
+        <div id="practiceSection" class="bg-slate-800 rounded-lg p-6 mb-6 shadow-lg">
+            <div class="flex items-center gap-2 mb-3">
+                <h2 class="text-xl font-semibold text-white">Practice Mode</h2>
+                <button onclick="document.getElementById('modeInfoModal').classList.remove('hidden')" class="text-slate-400 hover:text-white transition" title="About practice modes">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </button>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
                 <button id="intervalsMode" onclick="switchMode('intervals')" title="Start here! Learn to quickly identify and play intervals (half steps, whole steps, 3rds, 5ths, etc.)" class="mode-btn active px-4 py-2 rounded text-sm font-semibold transition">
                     1. Intervals
                 </button>
@@ -99,32 +103,84 @@
                 <button id="iiviMode" onclick="switchMode('iivi')" title="The most important jazz progression: play ii-V-I in all 12 keys with various voicings" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
                     3. ii-V-I
                 </button>
+                <button id="minorIiviMode" onclick="switchMode('minorIivi')" title="Minor key version: iiø7 - V7 - imM7 progression in all 12 minor keys" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
+                    4. Minor ii-V-i
+                </button>
+                <button id="dom7vMode" onclick="switchMode('dom7v')" title="Rootless Type A/B voicings (3-5-7-9 and 7-9-3-5) for Maj7, Min7, and Dom7 chords in all 12 keys" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
+                    5. Rootless
+                </button>
+                <button id="extvMode" onclick="switchMode('extv')" title="Extended voicings: Maj6/9, Min6/9, and Dom13 in all 12 keys" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
+                    6. Extended
+                </button>
+                <button id="r251Mode" onclick="switchMode('r251')" title="Rootless ii-V-I with voice leading: Type A → Type B → Type A" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
+                    7. Rootless ii-V-I
+                </button>
                 <button id="extMode" onclick="switchMode('ext')" title="Add color: practice 9th, 11th, and 13th extensions on 7th chords" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
-                    4. Extensions
+                    8. Extensions
                 </button>
                 <button id="altMode" onclick="switchMode('alt')" title="Advanced harmony: practice altered tensions (b9, #9, #11, b13) on dominant chords" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
-                    5. Altered
-                </button>
-                <button id="scalesMode" onclick="switchMode('scales')" title="Learn scales that work over each chord type using the chord tone + whole step approach" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
-                    6. Jazz Scales
+                    9. Altered
                 </button>
                 <button id="advMode" onclick="switchMode('adv')" title="Beyond basics: half-diminished, diminished 7th, minor-major 7th, and augmented chords" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
-                    7. Adv Chords
-                </button>
-                <button id="minorIiviMode" onclick="switchMode('minorIivi')" title="Minor key version: iiø7 - V7 - imM7 progression in all 12 minor keys" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
-                    8. Minor ii-V-i
+                    10. Adv Chords
                 </button>
                 <button id="kbMode" onclick="switchMode('kb')" title="Kenny Barron's signature voicing: stacked 5ths between hands for rich minor 11 and maj7#11 sounds" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
-                    9. Kenny Barron
+                    11. Kenny Barron
                 </button>
                 <button id="jtouMode" onclick="switchMode('jtou')" title="Classic progression from 'Just the Two of Us': bVImaj7 - V7#9 - im7 in all minor keys" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
-                    10. JTOU
+                    12. JTOU
+                </button>
+                <button id="scalesMode" onclick="switchMode('scales')" title="Learn scales that work over each chord type using the chord tone + whole step approach" class="mode-btn px-4 py-2 rounded text-sm font-semibold transition">
+                    13. Jazz Scales
                 </button>
             </div>
         </div>
 
+        <!-- Mode Info Modal -->
+        <div id="modeInfoModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50" onclick="if(event.target === this) this.classList.add('hidden')">
+            <div class="bg-slate-800 rounded-lg p-6 max-w-lg mx-4 max-h-[80vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-white">Practice Modes</h3>
+                    <button onclick="document.getElementById('modeInfoModal').classList.add('hidden')" class="text-slate-400 hover:text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <div class="text-sm text-slate-300 space-y-4">
+                    <div>
+                        <div class="text-xs text-slate-500 uppercase tracking-wide mb-1">Foundations</div>
+                        <p><strong>1-2:</strong> Intervals and 7th chords - the building blocks</p>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 uppercase tracking-wide mb-1">Progressions</div>
+                        <p><strong>3-4:</strong> ii-V-I in major and minor keys - the essential jazz movements</p>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 uppercase tracking-wide mb-1">Voicings</div>
+                        <p><strong>5-7:</strong> Rootless voicings (Type A/B), extended voicings (6/9, 13), and voice-led progressions</p>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 uppercase tracking-wide mb-1">Color Tones</div>
+                        <p><strong>8-9:</strong> Extensions (9, 11, 13) and alterations (b9, #9, #11, b13)</p>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 uppercase tracking-wide mb-1">Advanced</div>
+                        <p><strong>10-11:</strong> Half-dim, dim, minMaj7 chords and Kenny Barron's stacked-5ths voicing</p>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 uppercase tracking-wide mb-1">Repertoire</div>
+                        <p><strong>12:</strong> "Just the Two of Us" progression (bVImaj7 - V7#9 - im7)</p>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 uppercase tracking-wide mb-1">Scales</div>
+                        <p><strong>13:</strong> Jazz scales that work over each chord type</p>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-500 mt-4">Hover over any mode button for a description.</p>
+            </div>
+        </div>
+
         <!-- ==================== INTERVALS MODE ==================== -->
-        <div id="intervalsPanel" class="mode-panel hidden">
+        <div id="intervalsPanel" class="mode-panel">
             <div class="bg-slate-800 rounded-lg p-6 mb-6 shadow-lg relative overflow-hidden">
                 <div class="flex justify-between items-start mb-4">
                     <div>
@@ -1663,6 +1719,460 @@
             </div>
         </div>
 
+        <!-- ==================== ROOTLESS VOICINGS MODE ==================== -->
+        <div id="dom7vPanel" class="mode-panel hidden">
+            <div class="bg-slate-800 rounded-lg p-6 mb-6 shadow-lg relative overflow-hidden">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h2 class="text-xl font-semibold text-white mb-1">Rootless Voicings</h2>
+                        <p class="text-sm text-slate-400">Type A voicing: <span class="text-orange-400">3rd - 5th - 7th - 9th</span> (no root)</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-slate-400">Avg Time</p>
+                        <p id="dom7v_responseTime" class="text-2xl font-mono timer-fast">--</p>
+                    </div>
+                </div>
+
+                <!-- Settings -->
+                <div id="dom7v_settingsPanel" class="mb-6 p-4 bg-slate-900 rounded-lg">
+                    <div class="flex flex-wrap gap-4 items-end">
+                        <div>
+                            <label class="text-sm text-slate-400 block mb-2">Chord Type:</label>
+                            <select id="dom7v_chordTypeSelect" class="bg-slate-700 border border-slate-600 rounded px-3 py-2 text-white text-sm">
+                                <option value="all" selected>All Types</option>
+                                <option value="maj7">Major 7 only</option>
+                                <option value="min7">Minor 7 only</option>
+                                <option value="dom7">Dominant 7 only</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-sm text-slate-400 block mb-2">Voicing Type:</label>
+                            <select id="dom7v_voicingTypeSelect" onchange="dom7vUpdateSettingsHint()" class="bg-slate-700 border border-slate-600 rounded px-3 py-2 text-white text-sm">
+                                <option value="A" selected>Type A (3-5-7-9)</option>
+                                <option value="B">Type B (7-9-3-5)</option>
+                                <option value="both">Both</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-sm text-slate-400 block mb-2">Rounds:</label>
+                            <select id="dom7v_roundsSelect" class="bg-slate-700 border border-slate-600 rounded px-3 py-2 text-white text-sm">
+                                <option value="6">6</option>
+                                <option value="12" selected>12</option>
+                                <option value="24">24</option>
+                                <option value="36">36</option>
+                                <option value="72">72 (all keys x types x voicings)</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-2 ml-4">
+                            <input type="checkbox" id="dom7v_showHints" class="w-4 h-4 rounded bg-slate-700 border-slate-600">
+                            <label for="dom7v_showHints" class="text-sm text-slate-400">Show note names</label>
+                        </div>
+                    </div>
+                    <p id="dom7v_settingsHint" class="text-xs text-slate-500 mt-3">Type A: 3-5-7-9 (from bottom). Type B: 7-9-3-5 (inverted, voice-leads smoothly with A).</p>
+                </div>
+
+                <!-- Challenge Display -->
+                <div id="dom7v_challengeDisplay" class="mb-6 p-8 bg-slate-900 rounded-lg text-center hidden">
+                    <p class="text-slate-400 mb-2">Play the rootless voicing for</p>
+                    <p class="text-5xl font-bold text-white mb-3">
+                        <span id="dom7v_chordDisplay">CMaj7</span>
+                        <span id="dom7v_voicingTypeDisplay" class="text-2xl text-orange-400 ml-2"></span>
+                    </p>
+                    <p id="dom7v_formulaLine" class="text-sm text-slate-400 mb-4">
+                        <span class="text-orange-400 font-bold">4</span> notes:
+                        <span id="dom7v_formulaHint" class="text-slate-300">3 - 5 - 7 - 9</span>
+                    </p>
+                    <p id="dom7v_noteHint" class="text-lg text-orange-300 mb-4 hidden">E - G - B - D</p>
+                    <p id="dom7v_heldNotes" class="text-sm text-slate-500 mt-2">Holding: --</p>
+                </div>
+
+                <!-- Game Complete Display -->
+                <div id="dom7v_gameCompleteDisplay" class="mb-6 p-8 bg-slate-900 rounded-lg text-center hidden">
+                    <p class="text-2xl font-bold text-green-400 mb-4">Game Complete!</p>
+                    <div class="grid grid-cols-5 gap-4 mb-4">
+                        <div>
+                            <p class="text-slate-400 text-sm">Score</p>
+                            <p id="dom7v_finalScore" class="text-3xl font-bold text-white">0/12</p>
+                            <p class="text-xs text-slate-500">first-try correct</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Accuracy</p>
+                            <p id="dom7v_finalAccuracy" class="text-3xl font-bold text-blue-400">0%</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Mistakes</p>
+                            <p id="dom7v_finalMistakes" class="text-3xl font-bold text-red-400">0</p>
+                            <p class="text-xs text-slate-500">mistakes</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Avg Time</p>
+                            <p id="dom7v_finalAvgTime" class="text-3xl font-bold text-purple-400">0s</p>
+                            <p class="text-xs text-slate-500">per chord</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Slow</p>
+                            <p id="dom7v_finalSlow" class="text-3xl font-bold text-yellow-400">0</p>
+                            <p class="text-xs text-slate-500">responses &gt;2s</p>
+                        </div>
+                    </div>
+                    <div id="dom7v_finalWeakAreas" class="text-yellow-400 text-sm mb-4"></div>
+                </div>
+
+                <!-- Piano Display -->
+                <div class="w-full overflow-x-auto mb-6 bg-slate-900 rounded-lg p-2 border border-slate-700">
+                    <svg id="dom7v_pianoSvg" viewBox="0 0 1000 120" class="w-full h-32"></svg>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-between items-center">
+                    <div class="space-x-4">
+                        <button id="dom7v_startBtn" onclick="dom7vStartGame()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded transition">
+                            Start Game
+                        </button>
+                        <button id="dom7v_stopBtn" onclick="dom7vStopGame()" class="bg-slate-600 hover:bg-slate-500 text-white font-bold py-2 px-6 rounded transition hidden">
+                            Stop
+                        </button>
+                        <button id="dom7v_playAgainBtn" onclick="dom7vPlayAgain()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded transition hidden">
+                            Play Again
+                        </button>
+                        <button id="dom7v_newGameBtn" onclick="dom7vNewGame()" class="bg-slate-600 hover:bg-slate-500 text-white font-bold py-2 px-6 rounded transition hidden">
+                            Change Settings
+                        </button>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-slate-400">Round</p>
+                        <span id="dom7v_roundDisplay" class="text-2xl font-mono text-white">0</span>
+                        <span class="text-slate-500">/</span>
+                        <span id="dom7v_totalRoundsDisplay" class="font-mono text-slate-400">12</span>
+                        <div class="flex gap-3 justify-end mt-1 text-xs">
+                            <span class="text-green-400">Score: <span id="dom7v_scoreDisplay" class="font-mono">0</span></span>
+                            <span class="text-red-400">Mistakes: <span id="dom7v_mistakesDisplay" class="font-mono">0</span></span>
+                            <span class="text-yellow-400">Slow: <span id="dom7v_slowDisplay" class="font-mono">0</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating feedback -->
+                <div id="dom7v_feedbackFloat" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            </div>
+
+            <!-- History -->
+            <div class="bg-slate-800 rounded-lg p-6 shadow-lg mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-white">Game History</h2>
+                    <button onclick="dom7vClearHistory()" class="text-xs text-slate-500 hover:text-slate-300">Clear History</button>
+                </div>
+                <div id="dom7v_historyContent" class="bg-slate-900 rounded p-4 text-slate-300 min-h-[80px]">
+                    <p class="italic text-slate-500">No games played yet.</p>
+                </div>
+            </div>
+
+            <!-- Breakdown -->
+            <div id="dom7v_breakdownSection" class="bg-slate-800 rounded-lg p-6 shadow-lg hidden">
+                <h2 class="text-xl font-semibold mb-4 text-white">Voicing Breakdown</h2>
+                <div id="dom7v_breakdownGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"></div>
+            </div>
+        </div>
+
+        <!-- ==================== EXTENDED VOICINGS MODE ==================== -->
+        <div id="extvPanel" class="mode-panel hidden">
+            <!-- Header -->
+            <div class="bg-slate-800 rounded-lg p-6 shadow-lg mb-6 relative">
+                <h1 class="text-2xl font-bold mb-2 text-white">Extended Voicings Practice</h1>
+                <p class="text-slate-400 mb-4">Maj6/9, Min6/9, and Dom13 voicings in all 12 keys</p>
+
+                <!-- Stats Row -->
+                <div class="flex gap-6 mb-4">
+                    <div class="text-center">
+                        <p class="text-sm text-slate-400">Avg Response</p>
+                        <p id="extv_responseTime" class="text-2xl font-mono timer-fast">--</p>
+                    </div>
+                </div>
+
+                <!-- Settings -->
+                <div id="extv_settingsPanel" class="mb-6 p-4 bg-slate-900 rounded-lg">
+                    <div class="flex flex-wrap gap-4 items-end">
+                        <div>
+                            <label class="text-sm text-slate-400 block mb-2">Chord Type:</label>
+                            <select id="extv_chordTypeSelect" class="bg-slate-700 border border-slate-600 rounded px-3 py-2 text-white text-sm">
+                                <option value="all" selected>All Types</option>
+                                <option value="maj69">Maj6/9 only</option>
+                                <option value="min69">Min6/9 only</option>
+                                <option value="dom13">Dom13 only</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-sm text-slate-400 block mb-2">Rounds:</label>
+                            <select id="extv_roundsSelect" class="bg-slate-700 border border-slate-600 rounded px-3 py-2 text-white text-sm">
+                                <option value="6">6</option>
+                                <option value="12" selected>12</option>
+                                <option value="24">24</option>
+                                <option value="36">36 (all keys x 3 types)</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-2 ml-4">
+                            <input type="checkbox" id="extv_showHints" class="w-4 h-4 rounded bg-slate-700 border-slate-600">
+                            <label for="extv_showHints" class="text-sm text-slate-400">Show note names</label>
+                        </div>
+                    </div>
+                    <p id="extv_settingsHint" class="text-xs text-slate-500 mt-3">Maj6/9: 3-5-6-9. Min6/9: b3-5-6-9. Dom13: 3-13-7-9 (soulful dominant sound).</p>
+                </div>
+
+                <!-- Challenge Display -->
+                <div id="extv_challengeDisplay" class="mb-6 p-8 bg-slate-900 rounded-lg text-center hidden">
+                    <p class="text-slate-400 mb-2">Play the extended voicing for</p>
+                    <p class="text-5xl font-bold text-white mb-3" id="extv_chordDisplay">CMaj6/9</p>
+                    <p id="extv_formulaLine" class="text-sm text-slate-400 mb-4">
+                        <span class="text-orange-400 font-bold">4</span> notes:
+                        <span id="extv_formulaHint" class="text-slate-300">3 - 5 - 6 - 9</span>
+                    </p>
+                    <p id="extv_noteHint" class="text-lg text-orange-300 mb-4 hidden">E - G - A - D</p>
+                    <p id="extv_heldNotes" class="text-sm text-slate-500 mt-2">Holding: --</p>
+                </div>
+
+                <!-- Game Complete Display -->
+                <div id="extv_gameCompleteDisplay" class="mb-6 p-8 bg-slate-900 rounded-lg text-center hidden">
+                    <p class="text-2xl font-bold text-green-400 mb-4">Game Complete!</p>
+                    <div class="grid grid-cols-5 gap-4 mb-4">
+                        <div>
+                            <p class="text-slate-400 text-sm">Score</p>
+                            <p id="extv_finalScore" class="text-3xl font-bold text-white">0/12</p>
+                            <p class="text-xs text-slate-500">first-try correct</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Accuracy</p>
+                            <p id="extv_finalAccuracy" class="text-3xl font-bold text-blue-400">0%</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Mistakes</p>
+                            <p id="extv_finalMistakes" class="text-3xl font-bold text-red-400">0</p>
+                            <p class="text-xs text-slate-500">mistakes</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Avg Time</p>
+                            <p id="extv_finalAvgTime" class="text-3xl font-bold text-purple-400">0s</p>
+                            <p class="text-xs text-slate-500">per chord</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Slow</p>
+                            <p id="extv_finalSlow" class="text-3xl font-bold text-yellow-400">0</p>
+                            <p class="text-xs text-slate-500">responses &gt;2s</p>
+                        </div>
+                    </div>
+                    <div id="extv_finalWeakAreas" class="text-yellow-400 text-sm mb-4"></div>
+                </div>
+
+                <!-- Piano Display -->
+                <div class="w-full overflow-x-auto mb-6 bg-slate-900 rounded-lg p-2 border border-slate-700">
+                    <svg id="extv_pianoSvg" viewBox="0 0 1000 120" class="w-full h-32"></svg>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-between items-center">
+                    <div class="space-x-4">
+                        <button id="extv_startBtn" onclick="extvStartGame()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded transition">
+                            Start Game
+                        </button>
+                        <button id="extv_stopBtn" onclick="extvStopGame()" class="bg-slate-600 hover:bg-slate-500 text-white font-bold py-2 px-6 rounded transition hidden">
+                            Stop
+                        </button>
+                        <button id="extv_playAgainBtn" onclick="extvPlayAgain()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded transition hidden">
+                            Play Again
+                        </button>
+                        <button id="extv_newGameBtn" onclick="extvNewGame()" class="bg-slate-600 hover:bg-slate-500 text-white font-bold py-2 px-6 rounded transition hidden">
+                            Change Settings
+                        </button>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-slate-400">Round</p>
+                        <span id="extv_roundDisplay" class="text-2xl font-mono text-white">0</span>
+                        <span class="text-slate-500">/</span>
+                        <span id="extv_totalRoundsDisplay" class="font-mono text-slate-400">12</span>
+                        <div class="flex gap-3 justify-end mt-1 text-xs">
+                            <span class="text-green-400">Score: <span id="extv_scoreDisplay" class="font-mono">0</span></span>
+                            <span class="text-red-400">Mistakes: <span id="extv_mistakesDisplay" class="font-mono">0</span></span>
+                            <span class="text-yellow-400">Slow: <span id="extv_slowDisplay" class="font-mono">0</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating feedback -->
+                <div id="extv_feedbackFloat" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            </div>
+
+            <!-- History -->
+            <div class="bg-slate-800 rounded-lg p-6 shadow-lg mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-white">Game History</h2>
+                    <button onclick="extvClearHistory()" class="text-xs text-slate-500 hover:text-slate-300">Clear History</button>
+                </div>
+                <div id="extv_historyContent" class="bg-slate-900 rounded p-4 text-slate-300 min-h-[80px]">
+                    <p class="italic text-slate-500">No games played yet.</p>
+                </div>
+            </div>
+
+            <!-- Breakdown -->
+            <div id="extv_breakdownSection" class="bg-slate-800 rounded-lg p-6 shadow-lg hidden">
+                <h2 class="text-xl font-semibold mb-4 text-white">Voicing Breakdown</h2>
+                <div id="extv_breakdownGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"></div>
+            </div>
+        </div>
+
+        <!-- ==================== ROOTLESS ii-V-I MODE ==================== -->
+        <div id="r251Panel" class="mode-panel hidden">
+            <!-- Header -->
+            <div class="bg-slate-800 rounded-lg p-6 shadow-lg mb-6 relative">
+                <h1 class="text-2xl font-bold mb-2 text-white">Rootless ii-V-I Practice</h1>
+                <p class="text-slate-400 mb-4">Voice-led progressions: Type A → Type B → Type A</p>
+
+                <!-- Stats Row -->
+                <div class="flex gap-6 mb-4">
+                    <div class="text-center">
+                        <p class="text-sm text-slate-400">Avg Response</p>
+                        <p id="r251_responseTime" class="text-2xl font-mono timer-fast">--</p>
+                    </div>
+                </div>
+
+                <!-- Settings -->
+                <div id="r251_settingsPanel" class="mb-6 p-4 bg-slate-900 rounded-lg">
+                    <div class="flex flex-wrap gap-4 items-end">
+                        <div>
+                            <label class="text-sm text-slate-400 block mb-2">Rounds:</label>
+                            <select id="r251_roundsSelect" class="bg-slate-700 border border-slate-600 rounded px-3 py-2 text-white text-sm">
+                                <option value="4">4</option>
+                                <option value="6">6</option>
+                                <option value="12" selected>12 (all keys)</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-2 ml-4">
+                            <input type="checkbox" id="r251_showHints" class="w-4 h-4 rounded bg-slate-700 border-slate-600">
+                            <label for="r251_showHints" class="text-sm text-slate-400">Show note names</label>
+                        </div>
+                    </div>
+                    <p id="r251_settingsHint" class="text-xs text-slate-500 mt-3">ii (m7 Type A) → V (dom7 Type B) → I (Maj7 Type A). Smooth voice leading with minimal hand movement.</p>
+                </div>
+
+                <!-- Challenge Display -->
+                <div id="r251_challengeDisplay" class="mb-6 p-8 bg-slate-900 rounded-lg text-center hidden">
+                    <p class="text-slate-400 mb-2">Key of <span id="r251_keyDisplay" class="text-white font-bold">C</span></p>
+
+                    <!-- Progression Display -->
+                    <div class="flex justify-center items-center gap-4 mb-4">
+                        <div id="r251_chord1Box" class="p-4 rounded-lg bg-slate-800 border-2 border-slate-600 min-w-[100px]">
+                            <p class="text-sm text-slate-400">ii</p>
+                            <p id="r251_chord1Name" class="text-2xl font-bold text-slate-500">Dm7</p>
+                            <p class="text-xs text-slate-500">(A)</p>
+                        </div>
+                        <span class="text-slate-500 text-2xl">→</span>
+                        <div id="r251_chord2Box" class="p-4 rounded-lg bg-slate-800 border-2 border-slate-600 min-w-[100px]">
+                            <p class="text-sm text-slate-400">V</p>
+                            <p id="r251_chord2Name" class="text-2xl font-bold text-slate-500">G7</p>
+                            <p class="text-xs text-slate-500">(B)</p>
+                        </div>
+                        <span class="text-slate-500 text-2xl">→</span>
+                        <div id="r251_chord3Box" class="p-4 rounded-lg bg-slate-800 border-2 border-slate-600 min-w-[100px]">
+                            <p class="text-sm text-slate-400">I</p>
+                            <p id="r251_chord3Name" class="text-2xl font-bold text-slate-500">CMaj7</p>
+                            <p class="text-xs text-slate-500">(A)</p>
+                        </div>
+                    </div>
+
+                    <p id="r251_formulaLine" class="text-sm text-slate-400 mb-4">
+                        <span class="text-orange-400 font-bold">4</span> notes:
+                        <span id="r251_formulaHint" class="text-slate-300">b3 - 5 - b7 - 9</span>
+                    </p>
+                    <p id="r251_noteHint" class="text-lg text-orange-300 mb-4 hidden">F - A - C - E</p>
+                    <p id="r251_heldNotes" class="text-sm text-slate-500 mt-2">Holding: --</p>
+                </div>
+
+                <!-- Game Complete Display -->
+                <div id="r251_gameCompleteDisplay" class="mb-6 p-8 bg-slate-900 rounded-lg text-center hidden">
+                    <p class="text-2xl font-bold text-green-400 mb-4">Game Complete!</p>
+                    <div class="grid grid-cols-5 gap-4 mb-4">
+                        <div>
+                            <p class="text-slate-400 text-sm">Score</p>
+                            <p id="r251_finalScore" class="text-3xl font-bold text-white">0/12</p>
+                            <p class="text-xs text-slate-500">progressions</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Accuracy</p>
+                            <p id="r251_finalAccuracy" class="text-3xl font-bold text-blue-400">0%</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Mistakes</p>
+                            <p id="r251_finalMistakes" class="text-3xl font-bold text-red-400">0</p>
+                            <p class="text-xs text-slate-500">wrong notes</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Avg Time</p>
+                            <p id="r251_finalAvgTime" class="text-3xl font-bold text-purple-400">0s</p>
+                            <p class="text-xs text-slate-500">per progression</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-sm">Slow</p>
+                            <p id="r251_finalSlow" class="text-3xl font-bold text-yellow-400">0</p>
+                            <p class="text-xs text-slate-500">responses &gt;6s</p>
+                        </div>
+                    </div>
+                    <div id="r251_finalWeakAreas" class="text-yellow-400 text-sm mb-4"></div>
+                </div>
+
+                <!-- Piano Display -->
+                <div class="w-full overflow-x-auto mb-6 bg-slate-900 rounded-lg p-2 border border-slate-700">
+                    <svg id="r251_pianoSvg" viewBox="0 0 1000 120" class="w-full h-32"></svg>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-between items-center">
+                    <div class="space-x-4">
+                        <button id="r251_startBtn" onclick="r251StartGame()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded transition">
+                            Start Game
+                        </button>
+                        <button id="r251_stopBtn" onclick="r251StopGame()" class="bg-slate-600 hover:bg-slate-500 text-white font-bold py-2 px-6 rounded transition hidden">
+                            Stop
+                        </button>
+                        <button id="r251_playAgainBtn" onclick="r251PlayAgain()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded transition hidden">
+                            Play Again
+                        </button>
+                        <button id="r251_newGameBtn" onclick="r251NewGame()" class="bg-slate-600 hover:bg-slate-500 text-white font-bold py-2 px-6 rounded transition hidden">
+                            Change Settings
+                        </button>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-slate-400">Round</p>
+                        <span id="r251_roundDisplay" class="text-2xl font-mono text-white">0</span>
+                        <span class="text-slate-500">/</span>
+                        <span id="r251_totalRoundsDisplay" class="font-mono text-slate-400">12</span>
+                        <div class="flex gap-3 justify-end mt-1 text-xs">
+                            <span class="text-green-400">Score: <span id="r251_scoreDisplay" class="font-mono">0</span></span>
+                            <span class="text-red-400">Mistakes: <span id="r251_mistakesDisplay" class="font-mono">0</span></span>
+                            <span class="text-yellow-400">Slow: <span id="r251_slowDisplay" class="font-mono">0</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating feedback -->
+                <div id="r251_feedbackFloat" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            </div>
+
+            <!-- History -->
+            <div class="bg-slate-800 rounded-lg p-6 shadow-lg mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-white">Game History</h2>
+                    <button onclick="r251ClearHistory()" class="text-xs text-slate-500 hover:text-slate-300">Clear History</button>
+                </div>
+                <div id="r251_historyContent" class="bg-slate-900 rounded p-4 text-slate-300 min-h-[80px]">
+                    <p class="italic text-slate-500">No games played yet.</p>
+                </div>
+            </div>
+
+            <!-- Breakdown -->
+            <div id="r251_breakdownSection" class="bg-slate-800 rounded-lg p-6 shadow-lg hidden">
+                <h2 class="text-xl font-semibold mb-4 text-white">Progression Breakdown</h2>
+                <div id="r251_breakdownGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2"></div>
+            </div>
+        </div>
+
         <!-- Footer -->
         <footer class="text-center text-slate-500 text-sm mt-8 pt-4 border-t border-slate-700">
             Feedback? DM <a href="https://twitter.com/dksf" target="_blank" class="text-blue-400 hover:text-blue-300">@dksf</a> on Twitter/X
@@ -1694,8 +2204,8 @@
         function switchMode(mode) {
             currentMode = mode;
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            const modeButtons = { intervals: 'intervalsMode', chords: 'chordsMode', iivi: 'iiviMode', scales: 'scalesMode', ext: 'extMode', alt: 'altMode', adv: 'advMode', minorIivi: 'minorIiviMode', kb: 'kbMode', jtou: 'jtouMode' };
-            const modePanels = { intervals: 'intervalsPanel', chords: 'chordsPanel', iivi: 'iiviPanel', scales: 'scalesPanel', ext: 'extPanel', alt: 'altPanel', adv: 'advPanel', minorIivi: 'minorIiviPanel', kb: 'kbPanel', jtou: 'jtouPanel' };
+            const modeButtons = { intervals: 'intervalsMode', chords: 'chordsMode', iivi: 'iiviMode', scales: 'scalesMode', ext: 'extMode', alt: 'altMode', adv: 'advMode', minorIivi: 'minorIiviMode', kb: 'kbMode', jtou: 'jtouMode', dom7v: 'dom7vMode', extv: 'extvMode', r251: 'r251Mode' };
+            const modePanels = { intervals: 'intervalsPanel', chords: 'chordsPanel', iivi: 'iiviPanel', scales: 'scalesPanel', ext: 'extPanel', alt: 'altPanel', adv: 'advPanel', minorIivi: 'minorIiviPanel', kb: 'kbPanel', jtou: 'jtouPanel', dom7v: 'dom7vPanel', extv: 'extvPanel', r251: 'r251Panel' };
             document.getElementById(modeButtons[mode]).classList.add('active');
             document.querySelectorAll('.mode-panel').forEach(panel => panel.classList.add('hidden'));
             document.getElementById(modePanels[mode]).classList.remove('hidden');
@@ -1846,6 +2356,9 @@
                 else if (currentMode === 'minorIivi') miiviOnNoteOn(note);
                 else if (currentMode === 'kb') kbHandleNoteOn(note);
                 else if (currentMode === 'jtou') jtouOnNoteOn(note);
+                else if (currentMode === 'dom7v') dom7vOnNoteOn(note);
+                else if (currentMode === 'extv') extvOnNoteOn(note);
+                else if (currentMode === 'r251') r251OnNoteOn(note);
             } else if ((cmd & 0xF0) === 128 || ((cmd & 0xF0) === 144 && vel === 0)) {
                 heldNotes.delete(note);
                 // Clear preview piano highlight
@@ -1860,6 +2373,9 @@
                 else if (currentMode === 'minorIivi') miiviOnNoteOff(note);
                 else if (currentMode === 'kb') kbHandleNoteOff(note);
                 else if (currentMode === 'jtou') jtouOnNoteOff(note);
+                else if (currentMode === 'dom7v') dom7vOnNoteOff(note);
+                else if (currentMode === 'extv') extvOnNoteOff(note);
+                else if (currentMode === 'r251') r251OnNoteOff(note);
             }
         }
 
@@ -1951,6 +2467,7 @@
         }
 
         function intStartGame() {
+            saveAllSettings();
             const intervals = Array.from(document.querySelectorAll('.int-interval-cb:checked')).map(cb => parseInt(cb.value));
             if (intervals.length === 0) { alert('Select at least one interval!'); return; }
 
@@ -2186,11 +2703,15 @@
 
             for (const [interval, data] of Object.entries(int_stats)) {
                 const pct = Math.round((data.firstTry / data.total) * 100);
-                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length).toFixed(1) : '--';
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
                 const color = pct >= 80 ? 'bg-green-900 border-green-700' : pct >= 50 ? 'bg-yellow-900 border-yellow-700' : 'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
                 const div = document.createElement('div');
-                div.className = `p-2 rounded border ${color} text-sm`;
-                div.innerHTML = `<p class="font-semibold">${interval}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs text-slate-400">Avg: ${avgT}s</p>`;
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">${interval}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
                 grid.appendChild(div);
             }
             document.getElementById('int_breakdownSection').classList.remove('hidden');
@@ -2347,6 +2868,7 @@
         let ch_cumulativeStats = {}; // Persistent stats across all games
 
         function chStartGame() {
+            saveAllSettings();
             const types = Array.from(document.querySelectorAll('.ch-type-cb:checked')).map(cb => cb.value);
             if (types.length === 0) { alert('Select at least one chord type!'); return; }
 
@@ -2598,11 +3120,15 @@
 
             for (const [chord, data] of Object.entries(ch_stats)) {
                 const pct = Math.round((data.firstTry / data.total) * 100);
-                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length).toFixed(1) : '--';
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
                 const color = pct >= 80 ? 'bg-green-900 border-green-700' : pct >= 50 ? 'bg-yellow-900 border-yellow-700' : 'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
                 const div = document.createElement('div');
-                div.className = `p-2 rounded border ${color} text-sm`;
-                div.innerHTML = `<p class="font-semibold">${chord}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs text-slate-400">Avg: ${avgT}s</p>`;
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">${chord}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
                 grid.appendChild(div);
             }
             document.getElementById('ch_breakdownSection').classList.remove('hidden');
@@ -2824,6 +3350,7 @@
         }
 
         function iiviStartGame() {
+            saveAllSettings();
             iivi_config = {
                 totalRounds: parseInt(document.getElementById('iivi_roundsSelect').value),
                 voicing: document.getElementById('iivi_voicingSelect').value // 'full' or 'shell'
@@ -3151,11 +3678,15 @@
 
             for (const [key, data] of Object.entries(iivi_stats)) {
                 const pct = Math.round((data.firstTry / data.total) * 100);
-                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length).toFixed(1) : '--';
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
                 const color = pct >= 80 ? 'bg-green-900 border-green-700' : pct >= 50 ? 'bg-yellow-900 border-yellow-700' : 'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
                 const div = document.createElement('div');
-                div.className = `p-2 rounded border ${color} text-sm`;
-                div.innerHTML = `<p class="font-semibold">Key of ${key}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs text-slate-400">Avg: ${avgT}s</p>`;
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">Key of ${key}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
                 grid.appendChild(div);
             }
             document.getElementById('iivi_breakdownSection').classList.remove('hidden');
@@ -3390,6 +3921,7 @@
         }
 
         function scStartGame() {
+            saveAllSettings();
             const chordTypeSetting = document.getElementById('sc_chordTypeSelect').value;
             const showHints = document.getElementById('sc_showHints').checked;
             sc_config = {
@@ -3659,11 +4191,15 @@
 
             for (const [scale, data] of Object.entries(sc_stats)) {
                 const pct = Math.round((data.firstTry / data.total) * 100);
-                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length).toFixed(1) : '--';
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
                 const color = pct >= 80 ? 'bg-green-900 border-green-700' : pct >= 50 ? 'bg-yellow-900 border-yellow-700' : 'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
                 const div = document.createElement('div');
-                div.className = `p-2 rounded border ${color} text-sm`;
-                div.innerHTML = `<p class="font-semibold">${scale}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs text-slate-400">Avg: ${avgT}s</p>`;
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">${scale}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
                 grid.appendChild(div);
             }
             document.getElementById('sc_breakdownSection').classList.remove('hidden');
@@ -3808,6 +4344,7 @@
         let ext_playedPitchClasses = new Set();
 
         function extStartGame() {
+            saveAllSettings();
             const chordTypeSetting = document.getElementById('ext_chordTypeSelect').value;
             const extensionSetting = document.getElementById('ext_extensionSelect').value;
             const showHints = document.getElementById('ext_showHints').checked;
@@ -4242,6 +4779,7 @@
         let alt_playedPitchClasses = new Set();
 
         function altStartGame() {
+            saveAllSettings();
             const alterationSetting = document.getElementById('alt_alterationSelect').value;
             const voicingSetting = document.getElementById('alt_voicingSelect').value;
             alt_config = {
@@ -4621,6 +5159,7 @@
         let adv_cumulativeStats = {}; // Persistent stats across all games
 
         function advStartGame() {
+            saveAllSettings();
             const types = Array.from(document.querySelectorAll('.adv-type-cb:checked')).map(cb => cb.value);
             if (types.length === 0) { alert('Select at least one chord type!'); return; }
 
@@ -4879,11 +5418,15 @@
 
             for (const [chord, data] of Object.entries(adv_stats)) {
                 const pct = Math.round((data.firstTry / data.total) * 100);
-                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length).toFixed(1) : '--';
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
                 const color = pct >= 80 ? 'bg-green-900 border-green-700' : pct >= 50 ? 'bg-yellow-900 border-yellow-700' : 'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
                 const div = document.createElement('div');
-                div.className = `p-2 rounded border ${color} text-sm`;
-                div.innerHTML = `<p class="font-semibold">${chord}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs text-slate-400">Avg: ${avgT}s</p>`;
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">${chord}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
                 grid.appendChild(div);
             }
             document.getElementById('adv_breakdownSection').classList.remove('hidden');
@@ -5077,6 +5620,7 @@
         }
 
         function miiviStartGame() {
+            saveAllSettings();
             miivi_config = {
                 totalRounds: parseInt(document.getElementById('miivi_roundsSelect').value)
             };
@@ -5360,11 +5904,15 @@
 
             for (const [keyName, data] of Object.entries(miivi_stats)) {
                 const pct = Math.round((data.firstTry / data.total) * 100);
-                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length).toFixed(1) : '--';
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
                 const color = pct >= 80 ? 'bg-green-900 border-green-700' : pct >= 50 ? 'bg-yellow-900 border-yellow-700' : 'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
                 const div = document.createElement('div');
-                div.className = `p-2 rounded border ${color} text-sm`;
-                div.innerHTML = `<p class="font-semibold">${keyName}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs text-slate-400">Avg: ${avgT}s</p>`;
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">${keyName}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
                 grid.appendChild(div);
             }
             document.getElementById('miivi_breakdownSection').classList.remove('hidden');
@@ -5539,6 +6087,7 @@
         let kb_roundHadMistake = false;
 
         function kbStartGame() {
+            saveAllSettings();
             const chordType = document.getElementById('kb_chordType').value;
             const voicingType = document.getElementById('kb_voicingType').value;
             const totalRounds = parseInt(document.getElementById('kb_rounds').value);
@@ -5838,11 +6387,15 @@
 
             for (const [keyName, data] of Object.entries(kb_stats)) {
                 const pct = Math.round((data.firstTry / data.total) * 100);
-                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length).toFixed(1) : '--';
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
                 const color = pct >= 80 ? 'bg-green-900 border-green-700' : pct >= 50 ? 'bg-yellow-900 border-yellow-700' : 'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
                 const div = document.createElement('div');
-                div.className = `p-2 rounded border ${color} text-sm`;
-                div.innerHTML = `<p class="font-semibold">${keyName}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs text-slate-400">Avg: ${avgT}s</p>`;
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">${keyName}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
                 grid.appendChild(div);
             }
             document.getElementById('kb_breakdownSection').classList.remove('hidden');
@@ -6056,6 +6609,7 @@
         }
 
         function jtouStartGame() {
+            saveAllSettings();
             const totalRounds = parseInt(document.getElementById('jtou_roundsSelect').value);
             const showHints = document.getElementById('jtou_showHints').checked;
             const voicing = document.getElementById('jtou_voicingSelect').value;
@@ -6370,11 +6924,15 @@
 
             for (const [keyName, data] of Object.entries(jtou_stats)) {
                 const pct = Math.round((data.firstTry / data.total) * 100);
-                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length).toFixed(1) : '--';
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
                 const color = pct >= 80 ? 'bg-green-900 border-green-700' : pct >= 50 ? 'bg-yellow-900 border-yellow-700' : 'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
                 const div = document.createElement('div');
-                div.className = `p-2 rounded border ${color} text-sm`;
-                div.innerHTML = `<p class="font-semibold">${keyName}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs text-slate-400">Avg: ${avgT}s</p>`;
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">${keyName}</p><p>${pct}% (${data.firstTry}/${data.total})</p><p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
                 grid.appendChild(div);
             }
             document.getElementById('jtou_breakdownSection').classList.remove('hidden');
@@ -6517,6 +7075,1655 @@
             content.innerHTML = html;
         }
 
+        // ============ ROOTLESS VOICINGS MODE ============
+        // Rootless voicings: Type A (3-5-7-9) and Type B (7-9-3-5)
+        const ROOTLESS_VOICINGS = {
+            'maj7': {
+                suffix: 'Maj7',
+                A: { intervals: [4, 7, 11, 2], formula: '3 - 5 - 7 - 9' },    // maj3, P5, maj7, maj9
+                B: { intervals: [11, 2, 4, 7], formula: '7 - 9 - 3 - 5' }     // maj7, maj9, maj3, P5
+            },
+            'min7': {
+                suffix: 'm7',
+                A: { intervals: [3, 7, 10, 2], formula: 'b3 - 5 - b7 - 9' },  // min3, P5, min7, maj9
+                B: { intervals: [10, 2, 3, 7], formula: 'b7 - 9 - b3 - 5' }   // min7, maj9, min3, P5
+            },
+            'dom7': {
+                suffix: '7',
+                A: { intervals: [4, 7, 10, 2], formula: '3 - 5 - b7 - 9' },   // maj3, P5, min7, maj9
+                B: { intervals: [10, 2, 4, 7], formula: 'b7 - 9 - 3 - 5' }    // min7, maj9, maj3, P5
+            }
+        };
+        const ROOTLESS_CHORD_TYPES = ['maj7', 'min7', 'dom7'];
+        const ROOTLESS_VOICING_TYPES = ['A', 'B'];
+
+        let dom7v_isPlaying = false;
+        let dom7v_challenge = null;
+        let dom7v_usedChallenges = new Set(); // Track used root+type combinations
+        let dom7v_challengeStartTime = null;
+        let dom7v_config = null;
+        let dom7v_currentRound = 0;
+        let dom7v_firstTryCorrect = 0;
+        let dom7v_totalMistakes = 0;
+        let dom7v_roundHadMistake = false;
+        let dom7v_stats = {};
+        let dom7v_allTimes = [];
+        let dom7v_slowCount = 0;
+        let dom7v_history = [];
+        let dom7v_cumulativeStats = {};
+
+        function dom7vGetChallenge(root, chordType, voicingType) {
+            const chord = ROOTLESS_VOICINGS[chordType];
+            const voicing = chord[voicingType];
+            const pitchClasses = new Set(voicing.intervals.map(i => (root + i) % 12));
+            const noteNames = voicing.intervals.map(i => NOTE_NAMES[(root + i) % 12]);
+            return {
+                root: root,
+                chordType: chordType,
+                voicingType: voicingType,
+                name: NOTE_NAMES[root] + chord.suffix,
+                pitchClasses: pitchClasses,
+                noteNames: noteNames,
+                formula: voicing.formula
+            };
+        }
+
+        function dom7vUpdateSettingsHint() {
+            const voicingType = document.getElementById('dom7v_voicingTypeSelect').value;
+            const hint = document.getElementById('dom7v_settingsHint');
+            if (voicingType === 'A') {
+                hint.innerText = 'Type A: 3-5-7-9 (from bottom). Standard rootless voicing.';
+            } else if (voicingType === 'B') {
+                hint.innerText = 'Type B: 7-9-3-5 (from bottom). Inverted voicing, voice-leads smoothly with Type A.';
+            } else {
+                hint.innerText = 'Both types: Practice alternating between A (3-5-7-9) and B (7-9-3-5) voicings.';
+            }
+        }
+
+        function dom7vStartGame() {
+            saveAllSettings();
+            dom7v_config = {
+                totalRounds: parseInt(document.getElementById('dom7v_roundsSelect').value),
+                showHints: document.getElementById('dom7v_showHints').checked,
+                chordType: document.getElementById('dom7v_chordTypeSelect').value,
+                voicingType: document.getElementById('dom7v_voicingTypeSelect').value
+            };
+            dom7v_currentRound = 0;
+            dom7v_firstTryCorrect = 0;
+            dom7v_totalMistakes = 0;
+            dom7v_slowCount = 0;
+            dom7v_roundHadMistake = false;
+            dom7v_usedChallenges = new Set();
+            dom7v_stats = {};
+            dom7v_allTimes = [];
+
+            document.getElementById('dom7v_roundDisplay').innerText = '0';
+            document.getElementById('dom7v_totalRoundsDisplay').innerText = dom7v_config.totalRounds;
+            document.getElementById('dom7v_responseTime').innerText = '--';
+            document.getElementById('dom7v_scoreDisplay').innerText = '0';
+            document.getElementById('dom7v_mistakesDisplay').innerText = '0';
+            document.getElementById('dom7v_slowDisplay').innerText = '0';
+
+            document.getElementById('dom7v_startBtn').classList.add('hidden');
+            document.getElementById('dom7v_stopBtn').classList.remove('hidden');
+            document.getElementById('dom7v_playAgainBtn').classList.add('hidden');
+            document.getElementById('dom7v_newGameBtn').classList.add('hidden');
+            document.getElementById('dom7v_settingsPanel').classList.add('hidden');
+            document.getElementById('dom7v_challengeDisplay').classList.remove('hidden');
+            document.getElementById('dom7v_gameCompleteDisplay').classList.add('hidden');
+            document.getElementById('dom7v_breakdownSection').classList.add('hidden');
+
+            dom7vRunCountdown(3);
+        }
+
+        function dom7vRunCountdown(seconds) {
+            if (seconds > 0) {
+                document.getElementById('dom7v_chordDisplay').innerText = seconds;
+                document.getElementById('dom7v_formulaLine').classList.add('hidden');
+                document.getElementById('dom7v_noteHint').classList.add('hidden');
+                document.getElementById('dom7v_heldNotes').innerText = 'Get ready...';
+                setTimeout(() => dom7vRunCountdown(seconds - 1), 1000);
+            } else {
+                document.getElementById('dom7v_formulaLine').classList.remove('hidden');
+                dom7v_isPlaying = true;
+                dom7vNextChallenge();
+            }
+        }
+
+        function dom7vNextChallenge() {
+            if (dom7v_currentRound >= dom7v_config.totalRounds) {
+                dom7vEndGame();
+                return;
+            }
+
+            // Determine which chord types and voicing types to use
+            const chordTypesToUse = dom7v_config.chordType === 'all' ? ROOTLESS_CHORD_TYPES : [dom7v_config.chordType];
+            const voicingTypesToUse = dom7v_config.voicingType === 'both' ? ROOTLESS_VOICING_TYPES : [dom7v_config.voicingType];
+
+            // Build list of available root+chordType+voicingType combinations
+            let availableChallenges = [];
+            for (let root = 0; root < 12; root++) {
+                for (const chordType of chordTypesToUse) {
+                    for (const voicingType of voicingTypesToUse) {
+                        const key = `${root}-${chordType}-${voicingType}`;
+                        if (!dom7v_usedChallenges.has(key)) {
+                            availableChallenges.push({ root, chordType, voicingType, key });
+                        }
+                    }
+                }
+            }
+
+            // Reset if we've used all combinations
+            if (availableChallenges.length === 0) {
+                dom7v_usedChallenges.clear();
+                for (let root = 0; root < 12; root++) {
+                    for (const chordType of chordTypesToUse) {
+                        for (const voicingType of voicingTypesToUse) {
+                            availableChallenges.push({ root, chordType, voicingType, key: `${root}-${chordType}-${voicingType}` });
+                        }
+                    }
+                }
+            }
+
+            // Pick random challenge
+            const chosen = availableChallenges[Math.floor(Math.random() * availableChallenges.length)];
+            dom7v_usedChallenges.add(chosen.key);
+
+            dom7v_challenge = dom7vGetChallenge(chosen.root, chosen.chordType, chosen.voicingType);
+            dom7v_currentRound++;
+            dom7v_roundHadMistake = false;
+            dom7v_challengeStartTime = Date.now();
+
+            document.getElementById('dom7v_roundDisplay').innerText = dom7v_currentRound;
+            document.getElementById('dom7v_chordDisplay').innerText = dom7v_challenge.name;
+            document.getElementById('dom7v_formulaHint').innerText = dom7v_challenge.formula;
+            document.getElementById('dom7v_heldNotes').innerText = 'Holding: --';
+
+            // Show voicing type indicator when practicing both types
+            const voicingTypeDisplay = document.getElementById('dom7v_voicingTypeDisplay');
+            if (dom7v_config.voicingType === 'both') {
+                voicingTypeDisplay.innerText = `(${dom7v_challenge.voicingType})`;
+            } else {
+                voicingTypeDisplay.innerText = '';
+            }
+
+            // Show/hide note hint based on settings
+            const noteHintEl = document.getElementById('dom7v_noteHint');
+            if (dom7v_config.showHints) {
+                noteHintEl.innerText = dom7v_challenge.noteNames.join(' - ');
+                noteHintEl.classList.remove('hidden');
+            } else {
+                noteHintEl.classList.add('hidden');
+            }
+
+            clearAllHighlights('dom7v_pianoSvg');
+        }
+
+        function dom7vOnNoteOn(midi) {
+            highlightKey('dom7v_pianoSvg', midi, 'key-held');
+
+            if (!dom7v_isPlaying || !dom7v_challenge) return;
+
+            const notePitchClass = midi % 12;
+            const requiredPitchClasses = dom7v_challenge.pitchClasses;
+
+            // Check if note is wrong (not in the voicing)
+            const isWrongNote = !requiredPitchClasses.has(notePitchClass);
+
+            if (isWrongNote) {
+                if (!dom7v_roundHadMistake) {
+                    dom7v_totalMistakes++;
+                    dom7v_roundHadMistake = true;
+                    dom7vShowFeedback('✗', false);
+                    document.getElementById('dom7v_mistakesDisplay').innerText = dom7v_totalMistakes;
+                }
+                highlightKey('dom7v_pianoSvg', midi, 'key-wrong');
+            }
+
+            // Update held notes display
+            const heldPitchClasses = new Set([...heldNotes].map(n => n % 12));
+            const heldNames = [...heldPitchClasses].map(pc => NOTE_NAMES[pc]).join(' ');
+            document.getElementById('dom7v_heldNotes').innerText = `Holding: ${heldNames || '--'}`;
+
+            // Check if all required notes are held
+            const hasAllRequired = [...requiredPitchClasses].every(pc => heldPitchClasses.has(pc));
+
+            if (hasAllRequired && heldNotes.size >= 4) {
+                // Voicing complete!
+                const responseTime = (Date.now() - dom7v_challengeStartTime) / 1000;
+
+                // Track slow responses
+                if (responseTime > 2) {
+                    dom7v_slowCount++;
+                    document.getElementById('dom7v_slowDisplay').innerText = dom7v_slowCount;
+                }
+
+                // Update stats for this chord (include voicing type in key when practicing both)
+                const statKey = dom7v_config.voicingType === 'both'
+                    ? `${dom7v_challenge.name} (${dom7v_challenge.voicingType})`
+                    : dom7v_challenge.name;
+                if (!dom7v_stats[statKey]) {
+                    dom7v_stats[statKey] = { firstTry: 0, total: 0, times: [], slow: 0 };
+                }
+                dom7v_stats[statKey].total++;
+                if (responseTime > 2) dom7v_stats[statKey].slow++;
+
+                if (!dom7v_roundHadMistake) {
+                    dom7v_firstTryCorrect++;
+                    dom7v_stats[statKey].firstTry++;
+                    dom7v_stats[statKey].times.push(responseTime);
+                    dom7v_allTimes.push(responseTime);
+                    document.getElementById('dom7v_scoreDisplay').innerText = dom7v_firstTryCorrect;
+                    dom7vShowFeedback('✓', true, responseTime);
+                } else {
+                    dom7vShowFeedback('✓', true);
+                }
+
+                // Update average time
+                if (dom7v_allTimes.length > 0) {
+                    const avg = dom7v_allTimes.reduce((a, b) => a + b, 0) / dom7v_allTimes.length;
+                    dom7vUpdateResponseTime(avg);
+                }
+
+                dom7v_isPlaying = false;
+                setTimeout(() => {
+                    clearAllHighlights('dom7v_pianoSvg');
+                    dom7v_isPlaying = true;
+                    dom7vNextChallenge();
+                }, 600);
+            }
+        }
+
+        function dom7vOnNoteOff(midi) {
+            highlightKey('dom7v_pianoSvg', midi, 'key-held', false);
+            highlightKey('dom7v_pianoSvg', midi, 'key-wrong', false);
+
+            // Update held notes display
+            const heldPitchClasses = new Set([...heldNotes].map(n => n % 12));
+            const heldNames = [...heldPitchClasses].map(pc => NOTE_NAMES[pc]).join(' ');
+            document.getElementById('dom7v_heldNotes').innerText = `Holding: ${heldNames || '--'}`;
+        }
+
+        function dom7vShowFeedback(text, isPositive, time = null) {
+            const el = document.getElementById('dom7v_feedbackFloat');
+            el.innerText = time !== null ? `${text} ${time.toFixed(1)}s` : text;
+            el.className = 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold pointer-events-none feedback-anim ' + (isPositive ? 'text-green-400' : 'text-red-400');
+            setTimeout(() => { el.className = 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold pointer-events-none opacity-0'; }, 1000);
+        }
+
+        function dom7vUpdateResponseTime(avgTime) {
+            const el = document.getElementById('dom7v_responseTime');
+            el.innerText = avgTime.toFixed(1) + 's';
+            el.className = 'text-2xl font-mono ' + (avgTime < 2 ? 'timer-fast' : avgTime < 4 ? 'timer-medium' : 'timer-slow');
+        }
+
+        function dom7vStopGame() {
+            dom7v_isPlaying = false;
+            dom7v_challenge = null;
+            clearAllHighlights('dom7v_pianoSvg');
+            document.getElementById('dom7v_startBtn').classList.remove('hidden');
+            document.getElementById('dom7v_stopBtn').classList.add('hidden');
+            document.getElementById('dom7v_challengeDisplay').classList.add('hidden');
+            document.getElementById('dom7v_settingsPanel').classList.remove('hidden');
+        }
+
+        function dom7vEndGame() {
+            dom7v_isPlaying = false;
+            dom7v_challenge = null;
+            clearAllHighlights('dom7v_pianoSvg');
+
+            const totalRounds = dom7v_config.totalRounds;
+            const accuracy = totalRounds > 0 ? Math.min(100, Math.round((dom7v_firstTryCorrect / totalRounds) * 100)) : 0;
+            const avgTime = dom7v_allTimes.length > 0 ? dom7v_allTimes.reduce((a, b) => a + b, 0) / dom7v_allTimes.length : 0;
+
+            // Save to history
+            dom7v_history.unshift({
+                date: new Date().toISOString(),
+                config: { ...dom7v_config },
+                score: dom7v_firstTryCorrect,
+                totalRounds,
+                accuracy,
+                avgTime,
+                totalMistakes: dom7v_totalMistakes,
+                slowCount: dom7v_slowCount,
+                stats: JSON.parse(JSON.stringify(dom7v_stats))
+            });
+            if (dom7v_history.length > 50) dom7v_history.pop();
+            localStorage.setItem('dom7vGameHistory', JSON.stringify(dom7v_history));
+
+            dom7vUpdateCumulativeStats();
+            dom7vShowGameComplete();
+        }
+
+        function dom7vShowGameComplete() {
+            const totalRounds = dom7v_config.totalRounds;
+            const accuracy = totalRounds > 0 ? Math.min(100, Math.round((dom7v_firstTryCorrect / totalRounds) * 100)) : 0;
+            const avgTime = dom7v_allTimes.length > 0 ? dom7v_allTimes.reduce((a, b) => a + b, 0) / dom7v_allTimes.length : 0;
+
+            document.getElementById('dom7v_finalScore').innerText = `${dom7v_firstTryCorrect}/${totalRounds}`;
+            document.getElementById('dom7v_finalAccuracy').innerText = `${accuracy}%`;
+            document.getElementById('dom7v_finalMistakes').innerText = dom7v_totalMistakes;
+            document.getElementById('dom7v_finalAvgTime').innerText = avgTime.toFixed(1) + 's';
+            document.getElementById('dom7v_finalSlow').innerText = dom7v_slowCount;
+
+            // Identify weak areas from this game
+            const weakAreas = Object.entries(dom7v_stats)
+                .filter(([_, data]) => data.firstTry < data.total)
+                .map(([name, _]) => name);
+            document.getElementById('dom7v_finalWeakAreas').innerText = weakAreas.length > 0 ? 'Needs practice: ' + weakAreas.join(', ') : '';
+
+            document.getElementById('dom7v_challengeDisplay').classList.add('hidden');
+            document.getElementById('dom7v_gameCompleteDisplay').classList.remove('hidden');
+            document.getElementById('dom7v_stopBtn').classList.add('hidden');
+            document.getElementById('dom7v_playAgainBtn').classList.remove('hidden');
+            document.getElementById('dom7v_newGameBtn').classList.remove('hidden');
+
+            dom7vShowBreakdown();
+            dom7vRenderHistory();
+        }
+
+        function dom7vPlayAgain() {
+            document.getElementById('dom7v_gameCompleteDisplay').classList.add('hidden');
+            document.getElementById('dom7v_playAgainBtn').classList.add('hidden');
+            document.getElementById('dom7v_newGameBtn').classList.add('hidden');
+            dom7vStartGame();
+        }
+
+        function dom7vNewGame() {
+            document.getElementById('dom7v_gameCompleteDisplay').classList.add('hidden');
+            document.getElementById('dom7v_breakdownSection').classList.add('hidden');
+            document.getElementById('dom7v_playAgainBtn').classList.add('hidden');
+            document.getElementById('dom7v_newGameBtn').classList.add('hidden');
+            document.getElementById('dom7v_startBtn').classList.remove('hidden');
+            document.getElementById('dom7v_settingsPanel').classList.remove('hidden');
+        }
+
+        function dom7vShowBreakdown() {
+            const grid = document.getElementById('dom7v_breakdownGrid');
+            grid.innerHTML = '';
+            if (Object.keys(dom7v_stats).length === 0) {
+                document.getElementById('dom7v_breakdownSection').classList.add('hidden');
+                return;
+            }
+
+            for (const [chordName, data] of Object.entries(dom7v_stats)) {
+                const pct = Math.round((data.firstTry / data.total) * 100);
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
+
+                const color = pct >= 80 ? 'bg-green-900 border-green-700' :
+                              pct >= 50 ? 'bg-yellow-900 border-yellow-700' :
+                              'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
+
+                const div = document.createElement('div');
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">${chordName}</p>
+                                 <p>${pct}% (${data.firstTry}/${data.total})</p>
+                                 <p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
+                grid.appendChild(div);
+            }
+            document.getElementById('dom7v_breakdownSection').classList.remove('hidden');
+        }
+
+        function dom7vLoadHistory() {
+            const saved = localStorage.getItem('dom7vGameHistory');
+            if (saved) { dom7v_history = JSON.parse(saved); }
+            const savedCumulative = localStorage.getItem('dom7vCumulativeStats');
+            if (savedCumulative) { dom7v_cumulativeStats = JSON.parse(savedCumulative); }
+            dom7vRenderHistory();
+        }
+
+        function dom7vClearHistory() {
+            dom7v_history = [];
+            dom7v_cumulativeStats = {};
+            localStorage.removeItem('dom7vGameHistory');
+            localStorage.removeItem('dom7vCumulativeStats');
+            dom7vRenderHistory();
+        }
+
+        function dom7vUpdateCumulativeStats() {
+            for (const [chordName, data] of Object.entries(dom7v_stats)) {
+                if (!dom7v_cumulativeStats[chordName]) {
+                    dom7v_cumulativeStats[chordName] = { attempts: 0, firstTry: 0, totalTime: 0, slow: 0 };
+                }
+                dom7v_cumulativeStats[chordName].attempts += data.total;
+                dom7v_cumulativeStats[chordName].firstTry += data.firstTry;
+                dom7v_cumulativeStats[chordName].totalTime += data.times.reduce((a, b) => a + b, 0);
+                dom7v_cumulativeStats[chordName].slow += data.slow || 0;
+            }
+            localStorage.setItem('dom7vCumulativeStats', JSON.stringify(dom7v_cumulativeStats));
+        }
+
+        function dom7vGetProblemAreas() {
+            const areas = [];
+            for (const [name, data] of Object.entries(dom7v_cumulativeStats)) {
+                if (data.attempts >= 3) {
+                    const successRate = (data.firstTry / data.attempts) * 100;
+                    const slowRate = ((data.slow || 0) / data.attempts) * 100;
+                    const avgTime = data.totalTime / data.attempts;
+                    const problemScore = (100 - successRate) + slowRate;
+                    areas.push({ name, successRate, slowRate, avgTime, attempts: data.attempts, problemScore });
+                }
+            }
+            return areas.sort((a, b) => b.problemScore - a.problemScore);
+        }
+
+        function dom7vRenderHistory() {
+            const content = document.getElementById('dom7v_historyContent');
+            if (dom7v_history.length === 0) { content.innerHTML = '<p class="italic text-slate-500">No games played yet.</p>'; return; }
+
+            const totalGames = dom7v_history.length;
+            const avgAccuracy = Math.round(dom7v_history.reduce((a, g) => a + g.accuracy, 0) / totalGames);
+
+            const displayedGames = dom7v_history.slice(0, 10);
+            const gamesWithSlowData = displayedGames.filter(g => g.slowCount !== undefined);
+            const bestAccuracy = gamesWithSlowData.length > 0 ? Math.max(...gamesWithSlowData.map(g => g.accuracy)) : -1;
+            const gamesWithBestAccuracy = gamesWithSlowData.filter(g => g.accuracy === bestAccuracy);
+            const lowestSlow = gamesWithBestAccuracy.length > 0 ? Math.min(...gamesWithBestAccuracy.map(g => g.slowCount)) : 0;
+            const gamesWithLowestSlow = gamesWithBestAccuracy.filter(g => g.slowCount === lowestSlow);
+            const bestTime = gamesWithLowestSlow.length > 0 ? Math.min(...gamesWithLowestSlow.map(g => g.avgTime)) : 0;
+            const isBest = (g) => g.slowCount !== undefined && g.accuracy === bestAccuracy && g.slowCount === lowestSlow && g.avgTime === bestTime;
+
+            let html = `<div class="mb-4"><div class="grid grid-cols-2 gap-4 text-center mb-3">
+                <div><p class="text-slate-400 text-xs">Games</p><p class="text-xl font-bold text-white">${totalGames}</p></div>
+                <div><p class="text-slate-400 text-xs">Avg Accuracy</p><p class="text-xl font-bold ${avgAccuracy >= 80 ? 'text-green-400' : avgAccuracy >= 60 ? 'text-yellow-400' : 'text-red-400'}">${avgAccuracy}%</p></div>
+            </div></div><div class="border-t border-slate-700 pt-3"><p class="text-xs text-slate-400 mb-2">Recent: <span class="text-yellow-400">★</span> = best</p><div class="space-y-2 max-h-48 overflow-y-auto">`;
+
+            displayedGames.forEach(game => {
+                const date = new Date(game.date);
+                const timeStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const isTheBest = isBest(game);
+                const rowClass = isTheBest ? 'bg-yellow-900/30 border border-yellow-700/50' : 'bg-slate-800';
+                const slowCount = game.slowCount || 0;
+                const slowStr = slowCount > 0 ? `<span class="text-yellow-400 text-xs ml-1">${slowCount}s</span>` : '';
+                html += `<div class="flex justify-between items-center text-sm p-2 ${rowClass} rounded">
+                    <div><span class="text-slate-400">${timeStr}</span><span class="text-xs text-slate-500 ml-2">${game.totalRounds}r</span></div>
+                    <div><span class="font-bold ${game.accuracy >= 80 ? 'text-green-400' : game.accuracy >= 60 ? 'text-yellow-400' : 'text-red-400'}">${game.accuracy}%</span><span class="text-slate-500 text-xs ml-1">(${game.avgTime.toFixed(1)}s)</span>${slowStr}${isTheBest ? '<span class="text-yellow-400 ml-1">★</span>' : ''}</div>
+                </div>`;
+            });
+            html += '</div></div>';
+
+            // Problem areas from cumulative stats
+            const problemAreas = dom7vGetProblemAreas();
+            if (problemAreas.length > 0) {
+                html += `<div class="border-t border-slate-700 pt-3 mt-3">
+                    <p class="text-xs text-slate-400 mb-2">Problem Areas <span class="text-slate-500" title="Items where you had the most mistakes or slowest times across all games">(✗=mistake rate, time=avg response, #=attempts)</span></p>
+                    <div class="space-y-1 max-h-32 overflow-y-auto">`;
+                problemAreas.slice(0, 5).forEach(area => {
+                    const mistakeRate = 100 - area.successRate;
+                    const avgTime = area.avgTime || 0;
+                    const hasMistakes = mistakeRate > 30;
+                    let indicators = '';
+                    if (hasMistakes) indicators += `<span class="text-red-400">✗${Math.round(mistakeRate)}%</span>`;
+                    const timeClass = avgTime > 4 ? 'text-yellow-400' : 'text-slate-500';
+                    indicators += `<span class="${timeClass} ml-1">${avgTime.toFixed(1)}s</span>`;
+                    html += `<div class="flex justify-between items-center text-xs p-1 bg-slate-800 rounded">
+                        <span class="text-slate-300">${area.name}</span>
+                        <div>${indicators} <span class="text-slate-500 ml-1">(${area.attempts})</span></div>
+                    </div>`;
+                });
+                html += '</div></div>';
+            }
+
+            content.innerHTML = html;
+        }
+
+        // ============ EXTENDED VOICINGS MODE ============
+        // Extended voicings: Maj6/9 (3-5-6-9), Min6/9 (b3-5-6-9), Dom13 (3-13-7-9)
+        const EXTENDED_VOICINGS = {
+            'maj69': { intervals: [4, 7, 9, 2], suffix: 'Maj6/9', formula: '3 - 5 - 6 - 9' },   // maj3, P5, maj6, maj9
+            'min69': { intervals: [3, 7, 9, 2], suffix: 'm6/9', formula: 'b3 - 5 - 6 - 9' },    // min3, P5, maj6, maj9
+            'dom13': { intervals: [4, 9, 10, 2], suffix: '13', formula: '3 - 13 - 7 - 9' }      // maj3, maj13, min7, maj9
+        };
+        const EXTENDED_CHORD_TYPES = ['maj69', 'min69', 'dom13'];
+
+        let extv_isPlaying = false;
+        let extv_challenge = null;
+        let extv_usedChallenges = new Set();
+        let extv_challengeStartTime = null;
+        let extv_config = null;
+        let extv_currentRound = 0;
+        let extv_firstTryCorrect = 0;
+        let extv_totalMistakes = 0;
+        let extv_roundHadMistake = false;
+        let extv_stats = {};
+        let extv_allTimes = [];
+        let extv_slowCount = 0;
+        let extv_history = [];
+        let extv_cumulativeStats = {};
+
+        function extvGetChallenge(root, chordType) {
+            const voicing = EXTENDED_VOICINGS[chordType];
+            const pitchClasses = new Set(voicing.intervals.map(i => (root + i) % 12));
+            const noteNames = voicing.intervals.map(i => NOTE_NAMES[(root + i) % 12]);
+            return {
+                root: root,
+                chordType: chordType,
+                name: NOTE_NAMES[root] + voicing.suffix,
+                pitchClasses: pitchClasses,
+                noteNames: noteNames,
+                formula: voicing.formula
+            };
+        }
+
+        function extvStartGame() {
+            saveAllSettings();
+            extv_config = {
+                totalRounds: parseInt(document.getElementById('extv_roundsSelect').value),
+                showHints: document.getElementById('extv_showHints').checked,
+                chordType: document.getElementById('extv_chordTypeSelect').value
+            };
+            extv_currentRound = 0;
+            extv_firstTryCorrect = 0;
+            extv_totalMistakes = 0;
+            extv_slowCount = 0;
+            extv_roundHadMistake = false;
+            extv_usedChallenges = new Set();
+            extv_stats = {};
+            extv_allTimes = [];
+
+            document.getElementById('extv_roundDisplay').innerText = '0';
+            document.getElementById('extv_totalRoundsDisplay').innerText = extv_config.totalRounds;
+            document.getElementById('extv_responseTime').innerText = '--';
+            document.getElementById('extv_scoreDisplay').innerText = '0';
+            document.getElementById('extv_mistakesDisplay').innerText = '0';
+            document.getElementById('extv_slowDisplay').innerText = '0';
+
+            document.getElementById('extv_startBtn').classList.add('hidden');
+            document.getElementById('extv_stopBtn').classList.remove('hidden');
+            document.getElementById('extv_playAgainBtn').classList.add('hidden');
+            document.getElementById('extv_newGameBtn').classList.add('hidden');
+            document.getElementById('extv_settingsPanel').classList.add('hidden');
+            document.getElementById('extv_challengeDisplay').classList.remove('hidden');
+            document.getElementById('extv_gameCompleteDisplay').classList.add('hidden');
+            document.getElementById('extv_breakdownSection').classList.add('hidden');
+
+            extvRunCountdown(3);
+        }
+
+        function extvRunCountdown(seconds) {
+            if (seconds > 0) {
+                document.getElementById('extv_chordDisplay').innerText = seconds;
+                document.getElementById('extv_formulaLine').classList.add('hidden');
+                document.getElementById('extv_noteHint').classList.add('hidden');
+                document.getElementById('extv_heldNotes').innerText = 'Get ready...';
+                setTimeout(() => extvRunCountdown(seconds - 1), 1000);
+            } else {
+                document.getElementById('extv_formulaLine').classList.remove('hidden');
+                extv_isPlaying = true;
+                extvNextChallenge();
+            }
+        }
+
+        function extvNextChallenge() {
+            if (extv_currentRound >= extv_config.totalRounds) {
+                extvEndGame();
+                return;
+            }
+
+            // Determine which chord types to use
+            const chordTypesToUse = extv_config.chordType === 'all' ? EXTENDED_CHORD_TYPES : [extv_config.chordType];
+
+            // Build list of available root+chordType combinations
+            let availableChallenges = [];
+            for (let root = 0; root < 12; root++) {
+                for (const chordType of chordTypesToUse) {
+                    const key = `${root}-${chordType}`;
+                    if (!extv_usedChallenges.has(key)) {
+                        availableChallenges.push({ root, chordType, key });
+                    }
+                }
+            }
+
+            // Reset if we've used all combinations
+            if (availableChallenges.length === 0) {
+                extv_usedChallenges.clear();
+                for (let root = 0; root < 12; root++) {
+                    for (const chordType of chordTypesToUse) {
+                        availableChallenges.push({ root, chordType, key: `${root}-${chordType}` });
+                    }
+                }
+            }
+
+            // Pick random challenge
+            const chosen = availableChallenges[Math.floor(Math.random() * availableChallenges.length)];
+            extv_usedChallenges.add(chosen.key);
+
+            extv_challenge = extvGetChallenge(chosen.root, chosen.chordType);
+            extv_currentRound++;
+            extv_roundHadMistake = false;
+            extv_challengeStartTime = Date.now();
+
+            document.getElementById('extv_roundDisplay').innerText = extv_currentRound;
+            document.getElementById('extv_chordDisplay').innerText = extv_challenge.name;
+            document.getElementById('extv_formulaHint').innerText = extv_challenge.formula;
+            document.getElementById('extv_heldNotes').innerText = 'Holding: --';
+
+            // Show/hide note hint based on settings
+            const noteHintEl = document.getElementById('extv_noteHint');
+            if (extv_config.showHints) {
+                noteHintEl.innerText = extv_challenge.noteNames.join(' - ');
+                noteHintEl.classList.remove('hidden');
+            } else {
+                noteHintEl.classList.add('hidden');
+            }
+
+            clearAllHighlights('extv_pianoSvg');
+        }
+
+        function extvOnNoteOn(midi) {
+            if (!extv_isPlaying || !extv_challenge) return;
+
+            const pc = midi % 12;
+            const isCorrect = extv_challenge.pitchClasses.has(pc);
+
+            highlightKey('extv_pianoSvg', midi, isCorrect ? '#22c55e' : '#ef4444');
+            heldNotes.add(midi);
+
+            if (!isCorrect) {
+                extv_roundHadMistake = true;
+                extv_totalMistakes++;
+                document.getElementById('extv_mistakesDisplay').innerText = extv_totalMistakes;
+                extvShowFeedback('✗', false);
+            }
+
+            // Check if all required notes are held
+            const heldPitchClasses = new Set([...heldNotes].map(n => n % 12));
+            const allCorrect = [...extv_challenge.pitchClasses].every(pc => heldPitchClasses.has(pc));
+
+            if (allCorrect && heldPitchClasses.size >= extv_challenge.pitchClasses.size) {
+                const responseTime = (Date.now() - extv_challengeStartTime) / 1000;
+
+                if (responseTime > 2) {
+                    extv_slowCount++;
+                    document.getElementById('extv_slowDisplay').innerText = extv_slowCount;
+                }
+
+                // Update stats for this chord
+                const statKey = extv_challenge.name;
+                if (!extv_stats[statKey]) {
+                    extv_stats[statKey] = { firstTry: 0, total: 0, times: [], slow: 0 };
+                }
+                extv_stats[statKey].total++;
+                if (responseTime > 2) extv_stats[statKey].slow++;
+
+                if (!extv_roundHadMistake) {
+                    extv_firstTryCorrect++;
+                    extv_stats[statKey].firstTry++;
+                    extv_stats[statKey].times.push(responseTime);
+                    extv_allTimes.push(responseTime);
+                    document.getElementById('extv_scoreDisplay').innerText = extv_firstTryCorrect;
+                    extvShowFeedback('✓', true, responseTime);
+                } else {
+                    extvShowFeedback('✓', true);
+                }
+
+                // Update average time
+                if (extv_allTimes.length > 0) {
+                    const avg = extv_allTimes.reduce((a, b) => a + b, 0) / extv_allTimes.length;
+                    extvUpdateResponseTime(avg);
+                }
+
+                setTimeout(() => {
+                    clearAllHighlights('extv_pianoSvg');
+                    extvNextChallenge();
+                }, 500);
+            }
+
+            // Update held notes display
+            const heldPitchClassesDisplay = new Set([...heldNotes].map(n => n % 12));
+            const heldNames = [...heldPitchClassesDisplay].map(pc => NOTE_NAMES[pc]).join(' ');
+            document.getElementById('extv_heldNotes').innerText = `Holding: ${heldNames || '--'}`;
+        }
+
+        function extvOnNoteOff(midi) {
+            heldNotes.delete(midi);
+            clearHighlight('extv_pianoSvg', midi);
+
+            const heldPitchClasses = new Set([...heldNotes].map(n => n % 12));
+            const heldNames = [...heldPitchClasses].map(pc => NOTE_NAMES[pc]).join(' ');
+            document.getElementById('extv_heldNotes').innerText = `Holding: ${heldNames || '--'}`;
+        }
+
+        function extvShowFeedback(text, isPositive, time = null) {
+            const el = document.getElementById('extv_feedbackFloat');
+            el.innerText = time !== null ? `${text} ${time.toFixed(1)}s` : text;
+            el.className = 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold pointer-events-none feedback-anim ' + (isPositive ? 'text-green-400' : 'text-red-400');
+            setTimeout(() => { el.className = 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold pointer-events-none opacity-0'; }, 1000);
+        }
+
+        function extvUpdateResponseTime(avgTime) {
+            const el = document.getElementById('extv_responseTime');
+            el.innerText = avgTime.toFixed(1) + 's';
+            el.className = 'text-2xl font-mono ' + (avgTime < 2 ? 'timer-fast' : avgTime < 4 ? 'timer-medium' : 'timer-slow');
+        }
+
+        function extvStopGame() {
+            extv_isPlaying = false;
+            extv_challenge = null;
+            clearAllHighlights('extv_pianoSvg');
+            document.getElementById('extv_startBtn').classList.remove('hidden');
+            document.getElementById('extv_stopBtn').classList.add('hidden');
+            document.getElementById('extv_challengeDisplay').classList.add('hidden');
+            document.getElementById('extv_settingsPanel').classList.remove('hidden');
+        }
+
+        function extvEndGame() {
+            extv_isPlaying = false;
+            extv_challenge = null;
+
+            // Save to history
+            const gameResult = {
+                date: new Date().toISOString(),
+                score: extv_firstTryCorrect,
+                total: extv_config.totalRounds,
+                accuracy: Math.round((extv_firstTryCorrect / extv_config.totalRounds) * 100),
+                avgTime: extv_allTimes.length > 0 ? (extv_allTimes.reduce((a, b) => a + b, 0) / extv_allTimes.length).toFixed(1) : '--',
+                mistakes: extv_totalMistakes,
+                slow: extv_slowCount,
+                chordType: extv_config.chordType
+            };
+            extv_history.unshift(gameResult);
+            if (extv_history.length > 10) extv_history.pop();
+            localStorage.setItem('extvGameHistory', JSON.stringify(extv_history));
+
+            extvUpdateCumulativeStats();
+
+            // Update final display
+            document.getElementById('extv_finalScore').innerText = `${extv_firstTryCorrect}/${extv_config.totalRounds}`;
+            document.getElementById('extv_finalAccuracy').innerText = gameResult.accuracy + '%';
+            document.getElementById('extv_finalMistakes').innerText = extv_totalMistakes;
+            document.getElementById('extv_finalAvgTime').innerText = gameResult.avgTime + 's';
+            document.getElementById('extv_finalSlow').innerText = extv_slowCount;
+
+            const weakAreas = Object.entries(extv_stats)
+                .filter(([_, data]) => data.firstTry < data.total)
+                .map(([name, _]) => name);
+            document.getElementById('extv_finalWeakAreas').innerText = weakAreas.length > 0 ? 'Needs practice: ' + weakAreas.join(', ') : '';
+
+            document.getElementById('extv_challengeDisplay').classList.add('hidden');
+            document.getElementById('extv_gameCompleteDisplay').classList.remove('hidden');
+            document.getElementById('extv_stopBtn').classList.add('hidden');
+            document.getElementById('extv_playAgainBtn').classList.remove('hidden');
+            document.getElementById('extv_newGameBtn').classList.remove('hidden');
+
+            extvShowBreakdown();
+            extvRenderHistory();
+        }
+
+        function extvPlayAgain() {
+            document.getElementById('extv_gameCompleteDisplay').classList.add('hidden');
+            document.getElementById('extv_playAgainBtn').classList.add('hidden');
+            document.getElementById('extv_newGameBtn').classList.add('hidden');
+            extvStartGame();
+        }
+
+        function extvNewGame() {
+            document.getElementById('extv_gameCompleteDisplay').classList.add('hidden');
+            document.getElementById('extv_breakdownSection').classList.add('hidden');
+            document.getElementById('extv_playAgainBtn').classList.add('hidden');
+            document.getElementById('extv_newGameBtn').classList.add('hidden');
+            document.getElementById('extv_startBtn').classList.remove('hidden');
+            document.getElementById('extv_settingsPanel').classList.remove('hidden');
+        }
+
+        function extvShowBreakdown() {
+            const grid = document.getElementById('extv_breakdownGrid');
+            grid.innerHTML = '';
+            if (Object.keys(extv_stats).length === 0) {
+                document.getElementById('extv_breakdownSection').classList.add('hidden');
+                return;
+            }
+
+            for (const [chordName, data] of Object.entries(extv_stats)) {
+                const pct = Math.round((data.firstTry / data.total) * 100);
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
+
+                const color = pct >= 80 ? 'bg-green-900 border-green-700' :
+                              pct >= 50 ? 'bg-yellow-900 border-yellow-700' :
+                              'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
+
+                const div = document.createElement('div');
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">${chordName}</p>
+                                 <p>${pct}% (${data.firstTry}/${data.total})</p>
+                                 <p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
+                grid.appendChild(div);
+            }
+
+            document.getElementById('extv_breakdownSection').classList.remove('hidden');
+        }
+
+        function extvLoadHistory() {
+            const savedHistory = localStorage.getItem('extvGameHistory');
+            if (savedHistory) { extv_history = JSON.parse(savedHistory); }
+            const savedCumulative = localStorage.getItem('extvCumulativeStats');
+            if (savedCumulative) { extv_cumulativeStats = JSON.parse(savedCumulative); }
+            extvRenderHistory();
+        }
+
+        function extvClearHistory() {
+            extv_history = [];
+            extv_cumulativeStats = {};
+            localStorage.removeItem('extvGameHistory');
+            localStorage.removeItem('extvCumulativeStats');
+            extvRenderHistory();
+        }
+
+        function extvUpdateCumulativeStats() {
+            for (const [chordName, data] of Object.entries(extv_stats)) {
+                if (!extv_cumulativeStats[chordName]) {
+                    extv_cumulativeStats[chordName] = { attempts: 0, firstTry: 0, totalTime: 0, slow: 0 };
+                }
+                extv_cumulativeStats[chordName].attempts += data.total;
+                extv_cumulativeStats[chordName].firstTry += data.firstTry;
+                extv_cumulativeStats[chordName].totalTime += data.times.reduce((a, b) => a + b, 0);
+                extv_cumulativeStats[chordName].slow += data.slow || 0;
+            }
+            localStorage.setItem('extvCumulativeStats', JSON.stringify(extv_cumulativeStats));
+        }
+
+        function extvGetProblemAreas() {
+            const areas = [];
+            for (const [name, data] of Object.entries(extv_cumulativeStats)) {
+                if (data.attempts >= 3) {
+                    const successRate = (data.firstTry / data.attempts) * 100;
+                    const slowRate = ((data.slow || 0) / data.attempts) * 100;
+                    if (successRate < 80 || slowRate > 30) {
+                        areas.push({ name, successRate: successRate.toFixed(0), slowRate: slowRate.toFixed(0), attempts: data.attempts });
+                    }
+                }
+            }
+            return areas.sort((a, b) => parseFloat(a.successRate) - parseFloat(b.successRate)).slice(0, 5);
+        }
+
+        function extvRenderHistory() {
+            const content = document.getElementById('extv_historyContent');
+            if (extv_history.length === 0 && Object.keys(extv_cumulativeStats).length === 0) {
+                content.innerHTML = '<p class="italic text-slate-500">No games played yet.</p>';
+                return;
+            }
+
+            let html = '';
+
+            // Problem areas
+            const problemAreas = extvGetProblemAreas();
+            if (problemAreas.length > 0) {
+                html += '<div class="mb-4 p-3 bg-yellow-900/30 border border-yellow-700 rounded">';
+                html += '<p class="text-yellow-400 font-semibold mb-2">⚠️ Problem Areas (need practice)</p>';
+                html += '<div class="flex flex-wrap gap-2">';
+                problemAreas.forEach(area => {
+                    const successIndicator = area.successRate < 80 ? `<span class="text-red-400">${area.successRate}%</span>` : `<span class="text-green-400">${area.successRate}%</span>`;
+                    const slowIndicator = area.slowRate > 30 ? `<span class="text-orange-400 ml-1">⏱${area.slowRate}%</span>` : '';
+                    const indicators = successIndicator + slowIndicator;
+                    html += `<div class="bg-slate-800 px-2 py-1 rounded text-sm">
+                        <span class="text-slate-300">${area.name}</span>
+                        <div>${indicators} <span class="text-slate-500 ml-1">(${area.attempts})</span></div>
+                    </div>`;
+                });
+                html += '</div></div>';
+            }
+
+            // Recent games
+            if (extv_history.length > 0) {
+                html += '<p class="text-slate-400 text-sm mb-2">Recent Games:</p>';
+                html += '<div class="space-y-1">';
+                extv_history.forEach(game => {
+                    const date = new Date(game.date).toLocaleDateString();
+                    const typeLabel = game.chordType === 'all' ? 'All' : EXTENDED_VOICINGS[game.chordType]?.suffix || game.chordType;
+                    const slowLabel = game.slow > 0 ? ` | <span class="text-orange-400">${game.slow} slow</span>` : '';
+                    html += `<div class="text-sm">
+                        <span class="text-slate-500">${date}</span>
+                        <span class="text-slate-400 ml-2">${typeLabel}</span>
+                        <span class="ml-2 ${game.accuracy >= 80 ? 'text-green-400' : game.accuracy >= 50 ? 'text-yellow-400' : 'text-red-400'}">${game.accuracy}%</span>
+                        <span class="text-slate-500">(${game.score}/${game.total})</span>
+                        <span class="text-purple-400 ml-2">${game.avgTime}s avg</span>
+                        ${slowLabel}
+                    </div>`;
+                });
+                html += '</div>';
+            }
+
+            content.innerHTML = html;
+        }
+
+        // ============ ROOTLESS ii-V-I MODE ============
+        // Voice-led progressions: Type A → Type B → Type A
+        // ii (m7 Type A) → V (dom7 Type B) → I (Maj7 Type A)
+        const R251_VOICINGS = {
+            ii: { type: 'min7', voicing: 'A', intervals: [3, 7, 10, 2], formula: 'b3 - 5 - b7 - 9' },
+            V:  { type: 'dom7', voicing: 'B', intervals: [10, 2, 4, 7], formula: 'b7 - 9 - 3 - 5' },
+            I:  { type: 'maj7', voicing: 'A', intervals: [4, 7, 11, 2], formula: '3 - 5 - 7 - 9' }
+        };
+
+        let r251_isPlaying = false;
+        let r251_challenge = null;
+        let r251_usedKeys = new Set();
+        let r251_challengeStartTime = null;
+        let r251_stepStartTime = null;
+        let r251_config = null;
+        let r251_currentRound = 0;
+        let r251_currentStep = 0; // 0=ii, 1=V, 2=I
+        let r251_firstTryCorrect = 0;
+        let r251_totalMistakes = 0;
+        let r251_roundHadMistake = false;
+        let r251_attemptHadMistake = false;
+        let r251_stats = {};
+        let r251_allTimes = [];
+        let r251_stepTimes = [];
+        let r251_slowCount = 0;
+        let r251_history = [];
+        let r251_cumulativeStats = {};
+
+        function r251GetProgression(key) {
+            // key = root of the I chord (e.g., 0 for C major)
+            // ii = minor 7 built on 2nd degree
+            // V = dominant 7 built on 5th degree
+            // I = major 7 built on root
+            const iiRoot = (key + 2) % 12;
+            const VRoot = (key + 7) % 12;
+            const IRoot = key;
+
+            const iiVoicing = R251_VOICINGS.ii;
+            const VVoicing = R251_VOICINGS.V;
+            const IVoicing = R251_VOICINGS.I;
+
+            return [
+                {
+                    root: iiRoot,
+                    name: NOTE_NAMES[iiRoot] + 'm7',
+                    voicingType: 'A',
+                    pitchClasses: new Set(iiVoicing.intervals.map(i => (iiRoot + i) % 12)),
+                    noteNames: iiVoicing.intervals.map(i => NOTE_NAMES[(iiRoot + i) % 12]),
+                    formula: iiVoicing.formula,
+                    degree: 'ii'
+                },
+                {
+                    root: VRoot,
+                    name: NOTE_NAMES[VRoot] + '7',
+                    voicingType: 'B',
+                    pitchClasses: new Set(VVoicing.intervals.map(i => (VRoot + i) % 12)),
+                    noteNames: VVoicing.intervals.map(i => NOTE_NAMES[(VRoot + i) % 12]),
+                    formula: VVoicing.formula,
+                    degree: 'V'
+                },
+                {
+                    root: IRoot,
+                    name: NOTE_NAMES[IRoot] + 'Maj7',
+                    voicingType: 'A',
+                    pitchClasses: new Set(IVoicing.intervals.map(i => (IRoot + i) % 12)),
+                    noteNames: IVoicing.intervals.map(i => NOTE_NAMES[(IRoot + i) % 12]),
+                    formula: IVoicing.formula,
+                    degree: 'I'
+                }
+            ];
+        }
+
+        function r251StartGame() {
+            saveAllSettings();
+            r251_config = {
+                totalRounds: parseInt(document.getElementById('r251_roundsSelect').value),
+                showHints: document.getElementById('r251_showHints').checked
+            };
+            r251_currentRound = 0;
+            r251_currentStep = 0;
+            r251_firstTryCorrect = 0;
+            r251_totalMistakes = 0;
+            r251_slowCount = 0;
+            r251_roundHadMistake = false;
+            r251_attemptHadMistake = false;
+            r251_usedKeys = new Set();
+            r251_stats = {};
+            r251_allTimes = [];
+
+            document.getElementById('r251_roundDisplay').innerText = '0';
+            document.getElementById('r251_totalRoundsDisplay').innerText = r251_config.totalRounds;
+            document.getElementById('r251_responseTime').innerText = '--';
+            document.getElementById('r251_scoreDisplay').innerText = '0';
+            document.getElementById('r251_mistakesDisplay').innerText = '0';
+            document.getElementById('r251_slowDisplay').innerText = '0';
+
+            document.getElementById('r251_startBtn').classList.add('hidden');
+            document.getElementById('r251_stopBtn').classList.remove('hidden');
+            document.getElementById('r251_playAgainBtn').classList.add('hidden');
+            document.getElementById('r251_newGameBtn').classList.add('hidden');
+            document.getElementById('r251_settingsPanel').classList.add('hidden');
+            document.getElementById('r251_challengeDisplay').classList.remove('hidden');
+            document.getElementById('r251_gameCompleteDisplay').classList.add('hidden');
+            document.getElementById('r251_breakdownSection').classList.add('hidden');
+
+            r251RunCountdown(3);
+        }
+
+        function r251RunCountdown(seconds) {
+            if (seconds > 0) {
+                document.getElementById('r251_keyDisplay').innerText = seconds;
+                document.getElementById('r251_formulaLine').classList.add('hidden');
+                document.getElementById('r251_noteHint').classList.add('hidden');
+                document.getElementById('r251_heldNotes').innerText = 'Get ready...';
+                r251ResetChordBoxes();
+                setTimeout(() => r251RunCountdown(seconds - 1), 1000);
+            } else {
+                document.getElementById('r251_formulaLine').classList.remove('hidden');
+                r251_isPlaying = true;
+                r251NextChallenge();
+            }
+        }
+
+        function r251ResetChordBoxes() {
+            for (let i = 1; i <= 3; i++) {
+                const box = document.getElementById(`r251_chord${i}Box`);
+                box.classList.remove('border-blue-400', 'bg-blue-900/30', 'border-green-400', 'bg-green-900/30');
+                box.classList.add('border-slate-600', 'bg-slate-800');
+                document.getElementById(`r251_chord${i}Name`).classList.remove('text-white', 'text-green-400');
+                document.getElementById(`r251_chord${i}Name`).classList.add('text-slate-500');
+            }
+        }
+
+        function r251HighlightCurrentChord() {
+            for (let i = 1; i <= 3; i++) {
+                const box = document.getElementById(`r251_chord${i}Box`);
+                const name = document.getElementById(`r251_chord${i}Name`);
+
+                if (i - 1 < r251_currentStep) {
+                    // Completed
+                    box.classList.remove('border-slate-600', 'bg-slate-800', 'border-blue-400', 'bg-blue-900/30');
+                    box.classList.add('border-green-400', 'bg-green-900/30');
+                    name.classList.remove('text-slate-500', 'text-white');
+                    name.classList.add('text-green-400');
+                } else if (i - 1 === r251_currentStep) {
+                    // Current
+                    box.classList.remove('border-slate-600', 'bg-slate-800', 'border-green-400', 'bg-green-900/30');
+                    box.classList.add('border-blue-400', 'bg-blue-900/30');
+                    name.classList.remove('text-slate-500', 'text-green-400');
+                    name.classList.add('text-white');
+                } else {
+                    // Upcoming
+                    box.classList.remove('border-blue-400', 'bg-blue-900/30', 'border-green-400', 'bg-green-900/30');
+                    box.classList.add('border-slate-600', 'bg-slate-800');
+                    name.classList.remove('text-white', 'text-green-400');
+                    name.classList.add('text-slate-500');
+                }
+            }
+        }
+
+        function r251NextChallenge() {
+            if (r251_currentRound >= r251_config.totalRounds) {
+                r251EndGame();
+                return;
+            }
+
+            clearAllHighlights('r251_pianoSvg');
+            r251_currentRound++;
+            r251_currentStep = 0;
+            r251_roundHadMistake = false;
+            r251_attemptHadMistake = false;
+            r251_stepTimes = [];
+
+            // Pick random unused key
+            if (r251_usedKeys.size >= 12) r251_usedKeys.clear();
+            const allKeys = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+            const unusedKeys = allKeys.filter(k => !r251_usedKeys.has(k));
+            const key = unusedKeys[Math.floor(Math.random() * unusedKeys.length)];
+            r251_usedKeys.add(key);
+
+            const progression = r251GetProgression(key);
+            r251_challenge = { key, progression, keyName: NOTE_NAMES[key] };
+
+            // Update UI
+            document.getElementById('r251_roundDisplay').innerText = r251_currentRound;
+            document.getElementById('r251_keyDisplay').innerText = r251_challenge.keyName;
+
+            // Set chord names
+            document.getElementById('r251_chord1Name').innerText = progression[0].name;
+            document.getElementById('r251_chord2Name').innerText = progression[1].name;
+            document.getElementById('r251_chord3Name').innerText = progression[2].name;
+
+            r251ResetChordBoxes();
+            r251HighlightCurrentChord();
+            r251UpdateCurrentChordDisplay();
+
+            r251_challengeStartTime = Date.now();
+            r251_stepStartTime = Date.now();
+        }
+
+        function r251UpdateCurrentChordDisplay() {
+            if (!r251_challenge) return;
+            const currentChord = r251_challenge.progression[r251_currentStep];
+
+            document.getElementById('r251_formulaHint').innerText = currentChord.formula;
+            document.getElementById('r251_heldNotes').innerText = 'Holding: --';
+
+            // Show/hide note hint based on settings
+            const noteHintEl = document.getElementById('r251_noteHint');
+            if (r251_config.showHints) {
+                noteHintEl.innerText = currentChord.noteNames.join(' - ');
+                noteHintEl.classList.remove('hidden');
+            } else {
+                noteHintEl.classList.add('hidden');
+            }
+        }
+
+        function r251OnNoteOn(midi) {
+            highlightKey('r251_pianoSvg', midi, 'key-held');
+
+            if (!r251_isPlaying || !r251_challenge) return;
+
+            const currentChord = r251_challenge.progression[r251_currentStep];
+            const notePitchClass = midi % 12;
+            const requiredPitchClasses = currentChord.pitchClasses;
+
+            // Check if note is wrong
+            const isWrongNote = !requiredPitchClasses.has(notePitchClass);
+
+            if (isWrongNote) {
+                if (!r251_attemptHadMistake) {
+                    r251_totalMistakes++;
+                    r251_attemptHadMistake = true;
+                    r251_roundHadMistake = true;
+                    r251ShowFeedback('✗', false);
+                    document.getElementById('r251_mistakesDisplay').innerText = r251_totalMistakes;
+                }
+                highlightKey('r251_pianoSvg', midi, 'key-wrong');
+            }
+
+            // Update held notes display
+            const heldPitchClasses = new Set([...heldNotes].map(n => n % 12));
+            const heldNames = [...heldPitchClasses].map(pc => NOTE_NAMES[pc]).join(' ');
+            document.getElementById('r251_heldNotes').innerText = `Holding: ${heldNames || '--'}`;
+
+            // Check if all required notes are held
+            const hasAllRequired = [...requiredPitchClasses].every(pc => heldPitchClasses.has(pc));
+
+            if (hasAllRequired && heldNotes.size >= 4) {
+                // Chord complete!
+                const stepTime = (Date.now() - r251_stepStartTime) / 1000;
+                r251_stepTimes.push(stepTime);
+
+                // Track slow responses (> 2 seconds per chord)
+                if (stepTime > 2) {
+                    r251_slowCount++;
+                    document.getElementById('r251_slowDisplay').innerText = r251_slowCount;
+                }
+
+                // Score this chord
+                if (!r251_attemptHadMistake) {
+                    r251_firstTryCorrect++;
+                    document.getElementById('r251_scoreDisplay').innerText = r251_firstTryCorrect;
+                }
+
+                r251ShowFeedback('✓', true, stepTime);
+
+                // Highlight correct notes
+                heldNotes.forEach(n => {
+                    if (requiredPitchClasses.has(n % 12)) {
+                        highlightKey('r251_pianoSvg', n, 'key-active');
+                    }
+                });
+
+                // Move to next step
+                r251_currentStep++;
+                r251_attemptHadMistake = false;
+
+                if (r251_currentStep >= 3) {
+                    // Progression complete!
+                    r251_isPlaying = false;
+                    const avgTime = r251_stepTimes.reduce((a, b) => a + b, 0) / r251_stepTimes.length;
+                    r251_allTimes.push(avgTime);
+
+                    // Track stats by key
+                    const keyName = r251_challenge.keyName;
+                    if (!r251_stats[keyName]) r251_stats[keyName] = { firstTry: 0, total: 0, times: [], slow: 0 };
+                    r251_stats[keyName].total++;
+                    if (!r251_roundHadMistake) {
+                        r251_stats[keyName].firstTry++;
+                        r251_stats[keyName].times.push(avgTime);
+                    }
+                    // Count slow chords in this round
+                    r251_stats[keyName].slow += r251_stepTimes.filter(t => t > 2).length;
+
+                    r251UpdateResponseTime(avgTime);
+                    r251HighlightCurrentChord();
+
+                    setTimeout(() => {
+                        r251_isPlaying = true;
+                        r251NextChallenge();
+                    }, 800);
+                } else {
+                    // Move to next chord
+                    r251_stepStartTime = Date.now();
+                    setTimeout(() => {
+                        clearAllHighlights('r251_pianoSvg');
+                        r251HighlightCurrentChord();
+                        r251UpdateCurrentChordDisplay();
+                    }, 400);
+                }
+            }
+        }
+
+        function r251OnNoteOff(midi) {
+            highlightKey('r251_pianoSvg', midi, 'key-held', false);
+            highlightKey('r251_pianoSvg', midi, 'key-wrong', false);
+            highlightKey('r251_pianoSvg', midi, 'key-active', false);
+
+            // Update held notes display
+            const heldPitchClasses = new Set([...heldNotes].map(n => n % 12));
+            const heldNames = [...heldPitchClasses].map(pc => NOTE_NAMES[pc]).join(' ');
+            document.getElementById('r251_heldNotes').innerText = `Holding: ${heldNames || '--'}`;
+        }
+
+        function r251ShowFeedback(text, isPositive, time = null) {
+            const el = document.getElementById('r251_feedbackFloat');
+            el.innerText = time !== null ? `${text} ${time.toFixed(1)}s` : text;
+            el.className = 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold pointer-events-none feedback-anim ' + (isPositive ? 'text-green-400' : 'text-red-400');
+            setTimeout(() => { el.className = 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold pointer-events-none opacity-0'; }, 1000);
+        }
+
+        function r251UpdateResponseTime(avgTime) {
+            const el = document.getElementById('r251_responseTime');
+            el.innerText = avgTime.toFixed(1) + 's';
+            el.className = 'text-2xl font-mono ' + (avgTime < 2 ? 'timer-fast' : avgTime < 4 ? 'timer-medium' : 'timer-slow');
+        }
+
+        function r251StopGame() {
+            r251_isPlaying = false;
+            r251_challenge = null;
+            clearAllHighlights('r251_pianoSvg');
+            document.getElementById('r251_startBtn').classList.remove('hidden');
+            document.getElementById('r251_stopBtn').classList.add('hidden');
+            document.getElementById('r251_challengeDisplay').classList.add('hidden');
+            document.getElementById('r251_settingsPanel').classList.remove('hidden');
+        }
+
+        function r251EndGame() {
+            r251_isPlaying = false;
+            r251_challenge = null;
+            clearAllHighlights('r251_pianoSvg');
+
+            const totalProgressions = r251_config.totalRounds;
+            const totalChords = totalProgressions * 3;
+            const accuracy = totalChords > 0 ? Math.min(100, Math.round((r251_firstTryCorrect / totalChords) * 100)) : 0;
+            const avgTime = r251_allTimes.length > 0 ? r251_allTimes.reduce((a, b) => a + b, 0) / r251_allTimes.length : 0;
+
+            // Save to history
+            r251_history.unshift({
+                date: new Date().toISOString(),
+                config: { ...r251_config },
+                score: r251_firstTryCorrect,
+                totalChords,
+                accuracy,
+                avgTime,
+                totalMistakes: r251_totalMistakes,
+                slowCount: r251_slowCount,
+                stats: JSON.parse(JSON.stringify(r251_stats))
+            });
+            if (r251_history.length > 50) r251_history.pop();
+            localStorage.setItem('r251GameHistory', JSON.stringify(r251_history));
+
+            r251UpdateCumulativeStats();
+            r251ShowGameComplete();
+        }
+
+        function r251ShowGameComplete() {
+            const totalChords = r251_config.totalRounds * 3;
+            const accuracy = totalChords > 0 ? Math.min(100, Math.round((r251_firstTryCorrect / totalChords) * 100)) : 0;
+            const avgTime = r251_allTimes.length > 0 ? r251_allTimes.reduce((a, b) => a + b, 0) / r251_allTimes.length : 0;
+
+            document.getElementById('r251_finalScore').innerText = `${r251_firstTryCorrect}/${totalChords}`;
+            document.getElementById('r251_finalAccuracy').innerText = `${accuracy}%`;
+            document.getElementById('r251_finalMistakes').innerText = r251_totalMistakes;
+            document.getElementById('r251_finalAvgTime').innerText = avgTime.toFixed(1) + 's';
+            document.getElementById('r251_finalSlow').innerText = r251_slowCount;
+
+            // Identify weak areas
+            const weakAreas = Object.entries(r251_stats)
+                .filter(([_, data]) => data.firstTry < data.total)
+                .map(([name, _]) => name);
+            document.getElementById('r251_finalWeakAreas').innerText = weakAreas.length > 0 ? 'Needs practice: ' + weakAreas.join(', ') : '';
+
+            document.getElementById('r251_challengeDisplay').classList.add('hidden');
+            document.getElementById('r251_gameCompleteDisplay').classList.remove('hidden');
+            document.getElementById('r251_stopBtn').classList.add('hidden');
+            document.getElementById('r251_playAgainBtn').classList.remove('hidden');
+            document.getElementById('r251_newGameBtn').classList.remove('hidden');
+
+            r251ShowBreakdown();
+            r251RenderHistory();
+        }
+
+        function r251PlayAgain() {
+            document.getElementById('r251_gameCompleteDisplay').classList.add('hidden');
+            document.getElementById('r251_playAgainBtn').classList.add('hidden');
+            document.getElementById('r251_newGameBtn').classList.add('hidden');
+            r251StartGame();
+        }
+
+        function r251NewGame() {
+            document.getElementById('r251_gameCompleteDisplay').classList.add('hidden');
+            document.getElementById('r251_breakdownSection').classList.add('hidden');
+            document.getElementById('r251_playAgainBtn').classList.add('hidden');
+            document.getElementById('r251_newGameBtn').classList.add('hidden');
+            document.getElementById('r251_startBtn').classList.remove('hidden');
+            document.getElementById('r251_settingsPanel').classList.remove('hidden');
+        }
+
+        function r251ShowBreakdown() {
+            const grid = document.getElementById('r251_breakdownGrid');
+            grid.innerHTML = '';
+            if (Object.keys(r251_stats).length === 0) {
+                document.getElementById('r251_breakdownSection').classList.add('hidden');
+                return;
+            }
+
+            for (const [keyName, data] of Object.entries(r251_stats)) {
+                const pct = Math.round((data.firstTry / data.total) * 100);
+                const avgT = data.times.length > 0 ? (data.times.reduce((a, b) => a + b, 0) / data.times.length) : 0;
+                const avgTStr = avgT > 0 ? avgT.toFixed(1) : '--';
+                const isSlow = avgT > 2;
+
+                const color = pct >= 80 ? 'bg-green-900 border-green-700' :
+                              pct >= 50 ? 'bg-yellow-900 border-yellow-700' :
+                              'bg-red-900 border-red-700';
+                const slowIndicator = isSlow ? ' ring-2 ring-orange-500' : '';
+
+                const div = document.createElement('div');
+                div.className = `p-2 rounded border ${color}${slowIndicator} text-sm`;
+                const timeClass = isSlow ? 'text-orange-400' : 'text-slate-400';
+                div.innerHTML = `<p class="font-semibold">Key of ${keyName}</p>
+                                 <p>${pct}% (${data.firstTry}/${data.total})</p>
+                                 <p class="text-xs ${timeClass}">Avg: ${avgTStr}s${isSlow ? ' ⏱' : ''}</p>`;
+                grid.appendChild(div);
+            }
+            document.getElementById('r251_breakdownSection').classList.remove('hidden');
+        }
+
+        function r251LoadHistory() {
+            const saved = localStorage.getItem('r251GameHistory');
+            if (saved) { r251_history = JSON.parse(saved); }
+            const savedCumulative = localStorage.getItem('r251CumulativeStats');
+            if (savedCumulative) { r251_cumulativeStats = JSON.parse(savedCumulative); }
+            r251RenderHistory();
+        }
+
+        function r251ClearHistory() {
+            r251_history = [];
+            r251_cumulativeStats = {};
+            localStorage.removeItem('r251GameHistory');
+            localStorage.removeItem('r251CumulativeStats');
+            r251RenderHistory();
+        }
+
+        function r251UpdateCumulativeStats() {
+            for (const [keyName, data] of Object.entries(r251_stats)) {
+                if (!r251_cumulativeStats[keyName]) {
+                    r251_cumulativeStats[keyName] = { attempts: 0, firstTry: 0, totalTime: 0, slow: 0 };
+                }
+                r251_cumulativeStats[keyName].attempts += data.total;
+                r251_cumulativeStats[keyName].firstTry += data.firstTry;
+                r251_cumulativeStats[keyName].totalTime += data.times.reduce((a, b) => a + b, 0);
+                r251_cumulativeStats[keyName].slow += data.slow || 0;
+            }
+            localStorage.setItem('r251CumulativeStats', JSON.stringify(r251_cumulativeStats));
+        }
+
+        function r251GetProblemAreas() {
+            const areas = [];
+            for (const [name, data] of Object.entries(r251_cumulativeStats)) {
+                if (data.attempts >= 3) {
+                    const successRate = (data.firstTry / data.attempts) * 100;
+                    const slowRate = ((data.slow || 0) / data.attempts) * 100;
+                    const avgTime = data.totalTime / data.attempts;
+                    const problemScore = (100 - successRate) + slowRate;
+                    areas.push({ name, successRate, slowRate, avgTime, attempts: data.attempts, problemScore });
+                }
+            }
+            return areas.sort((a, b) => b.problemScore - a.problemScore);
+        }
+
+        function r251RenderHistory() {
+            const content = document.getElementById('r251_historyContent');
+            if (r251_history.length === 0) { content.innerHTML = '<p class="italic text-slate-500">No games played yet.</p>'; return; }
+
+            const totalGames = r251_history.length;
+            const avgAccuracy = Math.round(r251_history.reduce((a, g) => a + g.accuracy, 0) / totalGames);
+
+            const displayedGames = r251_history.slice(0, 10);
+            const gamesWithSlowData = displayedGames.filter(g => g.slowCount !== undefined);
+            const bestAccuracy = gamesWithSlowData.length > 0 ? Math.max(...gamesWithSlowData.map(g => g.accuracy)) : -1;
+            const gamesWithBestAccuracy = gamesWithSlowData.filter(g => g.accuracy === bestAccuracy);
+            const lowestSlow = gamesWithBestAccuracy.length > 0 ? Math.min(...gamesWithBestAccuracy.map(g => g.slowCount)) : 0;
+            const gamesWithLowestSlow = gamesWithBestAccuracy.filter(g => g.slowCount === lowestSlow);
+            const bestTime = gamesWithLowestSlow.length > 0 ? Math.min(...gamesWithLowestSlow.map(g => g.avgTime)) : 0;
+            const isBest = (g) => g.slowCount !== undefined && g.accuracy === bestAccuracy && g.slowCount === lowestSlow && g.avgTime === bestTime;
+
+            let html = `<div class="mb-4"><div class="grid grid-cols-2 gap-4 text-center mb-3">
+                <div><p class="text-slate-400 text-xs">Games</p><p class="text-xl font-bold text-white">${totalGames}</p></div>
+                <div><p class="text-slate-400 text-xs">Avg Accuracy</p><p class="text-xl font-bold ${avgAccuracy >= 80 ? 'text-green-400' : avgAccuracy >= 60 ? 'text-yellow-400' : 'text-red-400'}">${avgAccuracy}%</p></div>
+            </div></div><div class="border-t border-slate-700 pt-3"><p class="text-xs text-slate-400 mb-2">Recent: <span class="text-yellow-400">★</span> = best</p><div class="space-y-2 max-h-48 overflow-y-auto">`;
+
+            displayedGames.forEach(game => {
+                const date = new Date(game.date);
+                const timeStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const isTheBest = isBest(game);
+                const rowClass = isTheBest ? 'bg-yellow-900/30 border border-yellow-700/50' : 'bg-slate-800';
+                const slowCount = game.slowCount || 0;
+                const slowStr = slowCount > 0 ? `<span class="text-yellow-400 text-xs ml-1">${slowCount}s</span>` : '';
+                html += `<div class="flex justify-between items-center text-sm p-2 ${rowClass} rounded">
+                    <div><span class="text-slate-400">${timeStr}</span><span class="text-xs text-slate-500 ml-2">${game.totalChords / 3}r</span></div>
+                    <div><span class="font-bold ${game.accuracy >= 80 ? 'text-green-400' : game.accuracy >= 60 ? 'text-yellow-400' : 'text-red-400'}">${game.accuracy}%</span><span class="text-slate-500 text-xs ml-1">(${game.avgTime.toFixed(1)}s)</span>${slowStr}${isTheBest ? '<span class="text-yellow-400 ml-1">★</span>' : ''}</div>
+                </div>`;
+            });
+            html += '</div></div>';
+
+            // Problem areas
+            const problemAreas = r251GetProblemAreas();
+            if (problemAreas.length > 0) {
+                html += `<div class="border-t border-slate-700 pt-3 mt-3">
+                    <p class="text-xs text-slate-400 mb-2">Problem Areas</p>
+                    <div class="space-y-1 max-h-32 overflow-y-auto">`;
+                problemAreas.slice(0, 5).forEach(area => {
+                    const mistakeRate = 100 - area.successRate;
+                    const avgTime = area.avgTime || 0;
+                    const hasMistakes = mistakeRate > 30;
+                    let indicators = '';
+                    if (hasMistakes) indicators += `<span class="text-red-400">✗${Math.round(mistakeRate)}%</span>`;
+                    const timeClass = avgTime > 4 ? 'text-yellow-400' : 'text-slate-500';
+                    indicators += `<span class="${timeClass} ml-1">${avgTime.toFixed(1)}s</span>`;
+                    html += `<div class="flex justify-between items-center text-xs p-1 bg-slate-800 rounded">
+                        <span class="text-slate-300">${area.name}</span>
+                        <div>${indicators} <span class="text-slate-500 ml-1">(${area.attempts})</span></div>
+                    </div>`;
+                });
+                html += '</div></div>';
+            }
+
+            content.innerHTML = html;
+        }
+
+        // ============ SETTINGS PERSISTENCE ============
+        function saveAllSettings() {
+            const settings = {
+                intervals: {
+                    intervals: Array.from(document.querySelectorAll('.int-interval-cb:checked')).map(cb => parseInt(cb.value)),
+                    direction: document.getElementById('int_directionSelect').value,
+                    rounds: document.getElementById('int_roundsSelect').value
+                },
+                chords: {
+                    types: Array.from(document.querySelectorAll('.ch-type-cb:checked')).map(cb => cb.value),
+                    hands: document.getElementById('ch_handsSelect').value,
+                    rounds: document.getElementById('ch_roundsSelect').value
+                },
+                iivi: {
+                    voicing: document.getElementById('iivi_voicingSelect').value,
+                    rounds: document.getElementById('iivi_roundsSelect').value
+                },
+                scales: {
+                    chordType: document.getElementById('sc_chordTypeSelect').value,
+                    rounds: document.getElementById('sc_roundsSelect').value,
+                    showHints: document.getElementById('sc_showHints').checked
+                },
+                extensions: {
+                    chordType: document.getElementById('ext_chordTypeSelect').value,
+                    extension: document.getElementById('ext_extensionSelect').value,
+                    rounds: document.getElementById('ext_roundsSelect').value,
+                    showHints: document.getElementById('ext_showHints').checked
+                },
+                altered: {
+                    alteration: document.getElementById('alt_alterationSelect').value,
+                    voicing: document.getElementById('alt_voicingSelect').value,
+                    rounds: document.getElementById('alt_roundsSelect').value
+                },
+                advanced: {
+                    types: Array.from(document.querySelectorAll('.adv-type-cb:checked')).map(cb => cb.value),
+                    rounds: document.getElementById('adv_roundsSelect').value,
+                    showHints: document.getElementById('adv_showHints').checked
+                },
+                minorIivi: {
+                    rounds: document.getElementById('miivi_roundsSelect').value
+                },
+                kennyBarron: {
+                    chordType: document.getElementById('kb_chordType').value,
+                    voicingType: document.getElementById('kb_voicingType').value,
+                    rounds: document.getElementById('kb_rounds').value,
+                    showHints: document.getElementById('kb_showHints').checked
+                },
+                jtou: {
+                    voicing: document.getElementById('jtou_voicingSelect').value,
+                    rounds: document.getElementById('jtou_roundsSelect').value,
+                    showHints: document.getElementById('jtou_showHints').checked
+                },
+                dom7Voicing: {
+                    chordType: document.getElementById('dom7v_chordTypeSelect').value,
+                    voicingType: document.getElementById('dom7v_voicingTypeSelect').value,
+                    rounds: document.getElementById('dom7v_roundsSelect').value,
+                    showHints: document.getElementById('dom7v_showHints').checked
+                },
+                extendedVoicings: {
+                    chordType: document.getElementById('extv_chordTypeSelect').value,
+                    rounds: document.getElementById('extv_roundsSelect').value,
+                    showHints: document.getElementById('extv_showHints').checked
+                },
+                rootless251: {
+                    rounds: document.getElementById('r251_roundsSelect').value,
+                    showHints: document.getElementById('r251_showHints').checked
+                }
+            };
+            localStorage.setItem('pianoTutorSettings', JSON.stringify(settings));
+        }
+
+        function loadAllSettings() {
+            const saved = localStorage.getItem('pianoTutorSettings');
+            if (!saved) return;
+            try {
+                const settings = JSON.parse(saved);
+
+                // Intervals
+                if (settings.intervals) {
+                    document.querySelectorAll('.int-interval-cb').forEach(cb => {
+                        cb.checked = settings.intervals.intervals.includes(parseInt(cb.value));
+                    });
+                    if (settings.intervals.direction) document.getElementById('int_directionSelect').value = settings.intervals.direction;
+                    if (settings.intervals.rounds) document.getElementById('int_roundsSelect').value = settings.intervals.rounds;
+                }
+
+                // Chords
+                if (settings.chords) {
+                    document.querySelectorAll('.ch-type-cb').forEach(cb => {
+                        cb.checked = settings.chords.types.includes(cb.value);
+                    });
+                    if (settings.chords.hands) document.getElementById('ch_handsSelect').value = settings.chords.hands;
+                    if (settings.chords.rounds) document.getElementById('ch_roundsSelect').value = settings.chords.rounds;
+                }
+
+                // ii-V-I
+                if (settings.iivi) {
+                    if (settings.iivi.voicing) document.getElementById('iivi_voicingSelect').value = settings.iivi.voicing;
+                    if (settings.iivi.rounds) document.getElementById('iivi_roundsSelect').value = settings.iivi.rounds;
+                }
+
+                // Scales
+                if (settings.scales) {
+                    if (settings.scales.chordType) document.getElementById('sc_chordTypeSelect').value = settings.scales.chordType;
+                    if (settings.scales.rounds) document.getElementById('sc_roundsSelect').value = settings.scales.rounds;
+                    if (settings.scales.showHints !== undefined) document.getElementById('sc_showHints').checked = settings.scales.showHints;
+                }
+
+                // Extensions
+                if (settings.extensions) {
+                    if (settings.extensions.chordType) document.getElementById('ext_chordTypeSelect').value = settings.extensions.chordType;
+                    if (settings.extensions.extension) document.getElementById('ext_extensionSelect').value = settings.extensions.extension;
+                    if (settings.extensions.rounds) document.getElementById('ext_roundsSelect').value = settings.extensions.rounds;
+                    if (settings.extensions.showHints !== undefined) document.getElementById('ext_showHints').checked = settings.extensions.showHints;
+                }
+
+                // Altered
+                if (settings.altered) {
+                    if (settings.altered.alteration) document.getElementById('alt_alterationSelect').value = settings.altered.alteration;
+                    if (settings.altered.voicing) document.getElementById('alt_voicingSelect').value = settings.altered.voicing;
+                    if (settings.altered.rounds) document.getElementById('alt_roundsSelect').value = settings.altered.rounds;
+                }
+
+                // Advanced
+                if (settings.advanced) {
+                    document.querySelectorAll('.adv-type-cb').forEach(cb => {
+                        cb.checked = settings.advanced.types.includes(cb.value);
+                    });
+                    if (settings.advanced.rounds) document.getElementById('adv_roundsSelect').value = settings.advanced.rounds;
+                    if (settings.advanced.showHints !== undefined) document.getElementById('adv_showHints').checked = settings.advanced.showHints;
+                }
+
+                // Minor ii-V-i
+                if (settings.minorIivi) {
+                    if (settings.minorIivi.rounds) document.getElementById('miivi_roundsSelect').value = settings.minorIivi.rounds;
+                }
+
+                // Kenny Barron
+                if (settings.kennyBarron) {
+                    if (settings.kennyBarron.chordType) document.getElementById('kb_chordType').value = settings.kennyBarron.chordType;
+                    if (settings.kennyBarron.voicingType) document.getElementById('kb_voicingType').value = settings.kennyBarron.voicingType;
+                    if (settings.kennyBarron.rounds) document.getElementById('kb_rounds').value = settings.kennyBarron.rounds;
+                    if (settings.kennyBarron.showHints !== undefined) document.getElementById('kb_showHints').checked = settings.kennyBarron.showHints;
+                }
+
+                // JTOU
+                if (settings.jtou) {
+                    if (settings.jtou.voicing) document.getElementById('jtou_voicingSelect').value = settings.jtou.voicing;
+                    if (settings.jtou.rounds) document.getElementById('jtou_roundsSelect').value = settings.jtou.rounds;
+                    if (settings.jtou.showHints !== undefined) document.getElementById('jtou_showHints').checked = settings.jtou.showHints;
+                }
+
+                // Rootless Voicings
+                if (settings.dom7Voicing) {
+                    if (settings.dom7Voicing.chordType) document.getElementById('dom7v_chordTypeSelect').value = settings.dom7Voicing.chordType;
+                    if (settings.dom7Voicing.voicingType) document.getElementById('dom7v_voicingTypeSelect').value = settings.dom7Voicing.voicingType;
+                    if (settings.dom7Voicing.rounds) document.getElementById('dom7v_roundsSelect').value = settings.dom7Voicing.rounds;
+                    if (settings.dom7Voicing.showHints !== undefined) document.getElementById('dom7v_showHints').checked = settings.dom7Voicing.showHints;
+                }
+
+                // Extended Voicings
+                if (settings.extendedVoicings) {
+                    if (settings.extendedVoicings.chordType) document.getElementById('extv_chordTypeSelect').value = settings.extendedVoicings.chordType;
+                    if (settings.extendedVoicings.rounds) document.getElementById('extv_roundsSelect').value = settings.extendedVoicings.rounds;
+                    if (settings.extendedVoicings.showHints !== undefined) document.getElementById('extv_showHints').checked = settings.extendedVoicings.showHints;
+                }
+
+                // Rootless ii-V-I
+                if (settings.rootless251) {
+                    if (settings.rootless251.rounds) document.getElementById('r251_roundsSelect').value = settings.rootless251.rounds;
+                    if (settings.rootless251.showHints !== undefined) document.getElementById('r251_showHints').checked = settings.rootless251.showHints;
+                }
+            } catch (e) {
+                console.error('Failed to load settings:', e);
+            }
+        }
+
         // ============ INIT ============
         drawPiano('previewPianoSvg');
         drawPiano('pianoSvg');
@@ -6529,6 +8736,9 @@
         drawPiano('miivi_pianoSvg');
         drawPiano('kb_pianoSvg');
         drawPiano('jtou_pianoSvg');
+        drawPiano('dom7v_pianoSvg');
+        drawPiano('extv_pianoSvg');
+        drawPiano('r251_pianoSvg');
         initMIDI();
         intLoadHistory();
         chLoadHistory();
@@ -6548,6 +8758,10 @@
         miiviLoadHistory();
         kbLoadHistory();
         jtouLoadHistory();
+        dom7vLoadHistory();
+        extvLoadHistory();
+        r251LoadHistory();
+        loadAllSettings();
         document.getElementById('jtou_voicingSelect').addEventListener('change', function() {
             const hint = document.getElementById('jtou_settingsHint');
             if (this.value === 'no5') {
@@ -6556,7 +8770,7 @@
                 hint.innerText = 'The classic Grover Washington Jr. / Bill Withers progression. In Fm: Dbmaj9 → C7#9 → Fm9';
             }
         });
-        window.addEventListener('resize', () => { drawPiano('previewPianoSvg'); drawPiano('pianoSvg'); drawPiano('ch_pianoSvg'); drawPiano('iivi_pianoSvg'); drawPiano('sc_pianoSvg'); drawPiano('ext_pianoSvg'); drawPiano('alt_pianoSvg'); drawPiano('adv_pianoSvg'); drawPiano('miivi_pianoSvg'); drawPiano('kb_pianoSvg'); drawPiano('jtou_pianoSvg'); });
+        window.addEventListener('resize', () => { drawPiano('previewPianoSvg'); drawPiano('pianoSvg'); drawPiano('ch_pianoSvg'); drawPiano('iivi_pianoSvg'); drawPiano('sc_pianoSvg'); drawPiano('ext_pianoSvg'); drawPiano('alt_pianoSvg'); drawPiano('adv_pianoSvg'); drawPiano('miivi_pianoSvg'); drawPiano('kb_pianoSvg'); drawPiano('jtou_pianoSvg'); drawPiano('dom7v_pianoSvg'); drawPiano('extv_pianoSvg'); drawPiano('r251_pianoSvg'); });
     </script>
 </body>
 </html>
